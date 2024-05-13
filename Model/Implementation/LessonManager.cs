@@ -5,8 +5,7 @@ public class LessonManager : ILessonManager
     public LessonManager(LessonProjContext lessonContext)
     {
         _lessonContext = lessonContext;
-    }   
-
+    }
 
     // Урок
     public void AddLesson(Lesson lesson)
@@ -30,7 +29,7 @@ public class LessonManager : ILessonManager
     }
 
     public void MarkLesson(int id, int mark)
-    { 
+    {
         LessonsRating lesrating = _lessonContext.LessonsRatings.FirstOrDefault(lr => lr.LessonId == id);
         lesrating.MarkCount++;
         lesrating.Rating = (lesrating.Rating + mark)/lesrating.MarkCount;

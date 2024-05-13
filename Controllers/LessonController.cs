@@ -24,7 +24,7 @@ public class LessonController : ControllerBase
         _lessonManager.DeleteLesson(id);
     }
 
-    [HttpGet("/api/lessons/deletelesson/{id}")]
+    [HttpGet("/api/lessons/editlesson/{id}/{newName}")]
     public void EditLesson(int id, string newName)
     {
         _lessonManager.EditLesson(id, newName);

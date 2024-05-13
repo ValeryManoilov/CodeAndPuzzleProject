@@ -3,7 +3,6 @@ public class LessonContent{
     public int? LessonId { get; set; }
     public string? ContentType { get; set; }
     public string? ContentPath { get; set; }
-
     
     public LessonContent () { }
 
