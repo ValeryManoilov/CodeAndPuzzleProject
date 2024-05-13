@@ -29,6 +29,18 @@ public class LessonManager : ILessonManager
         _lessonContext.SaveChanges();
     }
 
+    public void MarkLesson(int id, int mark)
+    { 
+        LessonsRating lesrating = _lessonContext.LessonsRatings.FirstOrDefault(lr => lr.LessonId == id);
+        lesrating.MarkCount++;
+        lesrating.Rating = (lesrating.Rating + mark)/lesrating.MarkCount;
+        _lessonContext.SaveChanges();
+    }
+
+    public List<Lesson> AllLessons(){
+        return _lessonContext.Lessons.ToList();
+    }
+
 
     // Тег
     public void AddLessonTag(LessonTag lessonTag)
@@ -77,20 +89,20 @@ public class LessonManager : ILessonManager
     // Рейтинг
     public void AddLessonRating(LessonsRating lessonRating)
     { 
-        _lessonContext.LessonRatings.Add(lessonRating);
+        _lessonContext.LessonsRatings.Add(lessonRating);
         _lessonContext.SaveChanges();
     }
 
     public void DeleteLessonRating(int id)
     { 
-        LessonsRating lesRat = _lessonContext.LessonRatings.FirstOrDefault(lr => lr.Id == id);
-        _lessonContext.LessonRatings.Remove(lesRat);
+        LessonsRating lesRat = _lessonContext.LessonsRatings.FirstOrDefault(lr => lr.Id == id);
+        _lessonContext.LessonsRatings.Remove(lesRat);
         _lessonContext.SaveChanges();
     }
 
     public void EditLessonRating(int id, int newRating)
     { 
-        LessonsRating lesRat = _lessonContext.LessonRatings.FirstOrDefault(lr => lr.Id == id);
+        LessonsRating lesRat = _lessonContext.LessonsRatings.FirstOrDefault(lr => lr.Id == id);
         lesRat.Rating = newRating;
         _lessonContext.SaveChanges();
     }

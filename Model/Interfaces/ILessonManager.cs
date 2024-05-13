@@ -4,6 +4,8 @@ public interface ILessonManager
     void AddLesson(Lesson lesson);
     void DeleteLesson(int id);
     void EditLesson(int id, string newName);
+    void MarkLesson(int id, int mark);
+    List<Lesson> AllLessons();
     // Контент
     void AddLessonContent(LessonContent lessonContent);
     void DeleteLessonContent(int id);

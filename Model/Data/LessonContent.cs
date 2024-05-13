@@ -4,15 +4,13 @@ public class LessonContent{
     public string? ContentType { get; set; }
     public string? ContentPath { get; set; }
 
-    public Lesson? LLesson { get; set; }
     
     public LessonContent () { }
 
-    public LessonContent(int id, int lessonId, string contentType, string contentPath, Lesson lesson){
+    public LessonContent(int id, int lessonId, string contentType, string contentPath){
         Id = id;
         LessonId = lessonId;
         ContentType = contentType;
         ContentPath = contentPath;
-        LLesson = lesson;
     }
 }

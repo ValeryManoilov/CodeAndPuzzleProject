@@ -4,15 +4,12 @@ public class LessonsRating{
     public int? MarkCount { get; set; }
     public int? Rating { get; set; }
 
-    public Lesson? LLesson { get; set; }
-    
     public LessonsRating () { }
 
-    public LessonsRating(int id, int lessonId, int markCount, int contentType, int rating, Lesson lesson){
+    public LessonsRating(int id, int lessonId, int markCount, int contentType, int rating){
         Id = id;
         LessonId = lessonId;
         MarkCount = markCount;
         Rating = rating;
-        LLesson = lesson;
     }
 }

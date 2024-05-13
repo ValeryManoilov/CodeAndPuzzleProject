@@ -17,6 +17,40 @@ public class LessonController : ControllerBase
         _lessonManager.AddLesson(lesson);
     }
 
+    
+    [HttpDelete("/api/lessons/deletelesson/{id}")]
+    public void DeleteLesson(int id)
+    {
+        _lessonManager.DeleteLesson(id);
+    }
+
+    [HttpGet("/api/lessons/deletelesson/{id}")]
+    public void EditLesson(int id, string newName)
+    {
+        _lessonManager.EditLesson(id, newName);
+    }
+
+    [HttpGet("api/lessons/marklesson/{id}/{mark}")]
+    public void MarkLesson(int id, int mark)
+    {
+        _lessonManager.MarkLesson(id, mark);
+    }
+
+    [HttpGet("api/lessons/getlessons")]
+    public IEnumerable<Lesson> AllLessons()
+    {
+        return _lessonManager.AllLessons();
+    }
+
+
+
+
+
+
+
+
+
+
     [HttpPost("/api/lessontags/add")]
     public void AddLessonTag([FromBody] LessonTag lessonTag)
     {
