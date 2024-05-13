@@ -1,10 +1,10 @@
 public class LessonContent{
     public int Id { get; set; }
-    public int LessonId { get; set; }
-    public string ContentType { get; set; }
-    public string ContentPath { get; set; }
+    public int? LessonId { get; set; }
+    public string? ContentType { get; set; }
+    public string? ContentPath { get; set; }
 
-    public Lesson LLesson { get; set; }
+    public Lesson? LLesson { get; set; }
     
     public LessonContent () { }
 

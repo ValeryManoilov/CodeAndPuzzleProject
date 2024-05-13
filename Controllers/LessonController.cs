@@ -16,4 +16,22 @@ public class LessonController : ControllerBase
     {
         _lessonManager.AddLesson(lesson);
     }
+
+    [HttpPost("/api/lessontags/add")]
+    public void AddLessonTag([FromBody] LessonTag lessonTag)
+    {
+        _lessonManager.AddLessonTag(lessonTag);
+    }
+
+    [HttpPost("/api/lessonsrating/add")]
+    public void AddLessonRating([FromBody] LessonsRating lessonsRating)
+    {
+        _lessonManager.AddLessonRating(lessonsRating);
+    }
+
+    [HttpPost("/api/lessoncontents/add")]
+    public void AddLessonContent([FromBody] LessonContent lessonContent)
+    {
+        _lessonManager.AddLessonContent(lessonContent);
+    }
 }

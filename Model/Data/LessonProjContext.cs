@@ -13,23 +13,22 @@ public class LessonProjContext : DbContext
     public DbSet<LessonContent> LessonContents { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-    { 
-        modelBuilder.Entity<Lesson>().HasKey(l=>l.Id);
-        modelBuilder.Entity<LessonsRating>().HasKey(lr=>lr.Id);
-        modelBuilder.Entity<LessonTag>().HasKey(lt=>lt.Id);
-        modelBuilder.Entity<LessonContent>().HasKey(lc=>lc.Id);
+    {
+        modelBuilder.Entity<Lesson>().HasKey(lesson=>lesson.Id);
+        modelBuilder.Entity<LessonsRating>().HasKey(lessonrating=>lessonrating.Id);
+        modelBuilder.Entity<LessonTag>().HasKey(lessontag=>lessontag.Id);
+        modelBuilder.Entity<LessonContent>().HasKey(lessoncontent=>lessoncontent.Id);
 
         modelBuilder.Entity<Lesson>()
-        .HasOne(l=>l.Rating)
-        .WithOne(lr=>lr.LLesson);
+        .HasOne(lesson=>lesson.Rating)
+        .WithOne(lessonrating=>lessonrating.LLesson);
 
         modelBuilder.Entity<Lesson>()
-        .HasMany(l=>l.Tags)
-        .WithOne(lt=>lt.LLesson);
+        .HasMany(lesson=>lesson.Tags)
+        .WithOne(lessontag=>lessontag.LLesson);
 
         modelBuilder.Entity<Lesson>()
-        .HasMany(l=>l.Contents)
-        .WithOne(lc=>lc.LLesson);
-
+        .HasMany(lesson=>lesson.Contents)
+        .WithOne(lessoncontent=>lessoncontent.LLesson);
     }
 }

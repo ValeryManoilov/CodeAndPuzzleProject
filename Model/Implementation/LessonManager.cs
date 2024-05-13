@@ -88,7 +88,7 @@ public class LessonManager : ILessonManager
         _lessonContext.SaveChanges();
     }
 
-    public void EditLessonRating(int id, string newRating)
+    public void EditLessonRating(int id, int newRating)
     { 
         LessonsRating lesRat = _lessonContext.LessonRatings.FirstOrDefault(lr => lr.Id == id);
         lesRat.Rating = newRating;
