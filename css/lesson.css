@@ -158,10 +158,12 @@ h2{
 .video{
     width: 100%;
     
+    
 }
 iframe {
     width: 100%;
     border-radius: 50px;
+    height: 500px;
 }
 .tegs{
     display: flex;
@@ -192,4 +194,62 @@ a{
     justify-content: left;
     align-items: center;
     font-size: 20px;
+}
+.izbr{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#strelka{
+   
+    width: 60px;
+    height: 60px;
+    margin-left: 40px;
+}
+.most{
+    background-image: url(../img/most.png);
+  
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 350px;
+    
+}
+
+.half-stars {
+    text-align: center;
+}
+.half-stars .rating-group {
+    display: inline-flex;
+}
+.half-stars input {
+    position: absolute;
+    left: -9999px;
+}
+.half-stars label {
+    margin: 0;
+    cursor: pointer;
+}
+.half-stars label svg {
+    margin: 2px;
+    height: 30px;
+    width: 30px;
+    fill: #eeff00;
+   
+    /* transition: fill 0.3s; */
+}
+.half-stars .hsr {
+    padding-right: 0;
+    margin-right: -22px;
+    width: 22px;
+    overflow: hidden;
+    z-index: 2;
+}
+.half-stars input:checked ~ label svg {
+    fill: #00366B;
+}
+.half-stars .rating-group:hover label svg {
+    fill: #eeff00;
+}
+.half-stars .rating-group input:hover ~ label svg {
+    fill: #00366B;
 }
