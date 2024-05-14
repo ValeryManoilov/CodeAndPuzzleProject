@@ -1,0 +1,154 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/*menu*/
+nav {
+    height: 60px;
+    background-color: #084887;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#punkt_menu {
+    width: 25%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+#menu_logo {
+padding-left: 40px;
+width: 70px;
+height: 28px;
+}
+
+.menu_button {
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 20px;
+}
+
+/*1 блок*/
+
+/* .black_fon {
+    background-color: #1E1E1E;
+    height: 45px;
+    width: 100%;
+} */
+
+#puzl_kod {
+    width: 30%;
+    padding-left: 35%;
+}
+
+#background_phooto_first_block {
+    position: relative;
+    width: 100%;
+    height: auto;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    filter: brightness(50%);
+}
+
+#first_block_all_text {
+     position: absolute;
+     top: 20%;
+     margin: auto;
+} 
+
+h1 {
+    color: white;
+    font-size: 24px;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+#h2_first_block {
+    max-width: 60%;
+    font-size: 20px;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+}
+
+#first_block_h1_and_h2 {
+    margin-top: 25px;
+    padding-left: 20%;
+}
+
+#button_first_block {
+    background: linear-gradient(45deg, #1E7EE8, #7AB9FF);
+    border: none;
+    color: white;
+    padding: 20px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    border-radius: 15px;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+#button_first_block_two {
+    background: linear-gradient(45deg, #1E7EE8, #7AB9FF);
+    border: none;
+    color: white;
+    padding: 20px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    border-radius: 15px;
+}
+
+#block_one_two_button {
+    margin-top: 25px;
+}
+
+#first_block_text {
+    text-decoration: underline #F58A07;
+    margin-top: 10px;
+    color: #F58A07;
+    font-size: 16px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+#block_first_butotton_and_text {
+    padding-left: 35%;
+} 
+
+#block_two_section {
+    /* background-color: #084887; */
+}
+
+/* второй блок */
+#block_two_section {
+
+background-image: url(./allphoto/Frame\1073714144.svg);
+}
+
+#block_two_h2 {
+    padding-top: 60px;
+    color: white;
+    font-size: 36px;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+#block_two_image_first {
+    width: 550px;
+    height: 450px;
+}
