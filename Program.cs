@@ -105,6 +105,16 @@ builder.Services.AddScoped<IEmailService>(provider =>
 });
 
 
+builder.Services.AddScoped<ILessonService>(provider =>
+{
+    var options = new DbContextOptionsBuilder<LessonContext>();
+    options.UseSqlite("Data Source=LessonDatabase.db");
+    var lessonContext = new LessonContext(options.Options);
+    lessonContext.Database.EnsureCreated();
+    ILessonRepository lessonRepository = new LessonRepository(lessonContext);
+    ILessonService lessonService = new LessonService(lessonRepository);
+    return lessonService;
+});
 
 
 builder.Services.AddSignalR();
@@ -121,7 +131,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapHub<UserHub>("/hubs/userhub");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

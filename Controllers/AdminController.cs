@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 
+
+[ApiController]
+[Route("api/admin")]
 public class AdminController : ControllerBase
 {
     private readonly RoleManager<ApplicationRole> _roleManager;
@@ -74,7 +77,6 @@ public class AdminController : ControllerBase
         }
         return NotFound();
     }
-
     [Authorize(Roles = "Admin")]
     [HttpGet("all")]
     public IActionResult All()
