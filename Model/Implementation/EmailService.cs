@@ -38,6 +38,7 @@ public class EmailService : IEmailService
         message.Subject = subject;
         message.Body = body;
 
+
         message.SubjectEncoding = System.Text.Encoding.UTF8;
         message.BodyEncoding = System.Text.Encoding.UTF8;
         message.IsBodyHtml = isHtml;
