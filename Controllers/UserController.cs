@@ -32,13 +32,15 @@ public class UserController : ControllerBase
     [HttpPost("adduser")]
     public async Task<IActionResult> CreateUser([FromForm] RegisterUserDataForm userForm)
 {
-    var user = new ApplicationUser{
+    var user = new ApplicationUser
+    {
         UserName = userForm.UserName,
         FirstName = userForm.FirstName,
         LastName = userForm.LastName,
         DateOfBirth = userForm.DateOfBirth,
         AvatarPath = "default.png",
-        Email = userForm.Email};
+        Email = userForm.Email
+        };
         if (userForm.avatar != null)
         {
             string avatarPath = $"{Guid.NewGuid()}_{userForm.avatar.FileName}";

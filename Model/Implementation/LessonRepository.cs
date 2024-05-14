@@ -326,19 +326,28 @@ public class LessonRepository : ILessonRepository
         _lessonContext.SaveChanges();
     }
 
-    public List<GetLessonsResponseData> GetLessonsNonAuthUser()
+    public List<GetLessonsResponseData> GetLessonsNonAuthUser(List<string> tags)
     {
-        List<ApplicationLesson> lessons = _lessonContext.Lessons.ToList();
-        Console.WriteLine(1);
+        if (tags.Count() == 0)
+        {
+            var lessons = _lessonContext.Lessons.ToList();
+        }
+        else
+        {
+            List<int> lessonIds = _lessonContext.LessonTags
+            .Where(t => tags.Contains(t.TagName)).Select(t => t.LessonId).ToList();
+            var lessons = _lessonContext.Lessons.Where(l => lessonIds.Contains(l.Id)).ToList();
+        }
+
         List<GetLessonsResponseData> responseData = lessons.Select(l => new GetLessonsResponseData
         {
             Lesson = l,
             Tags = _lessonContext.LessonTags.Where(t => t.LessonId == l.Id).ToList(),
             Rating = _lessonContext.LessonRatings.FirstOrDefault(r => r.LessonId == l.Id).Rating,
             isFav = false
-
         }).ToList();
-        return responseData;
+            
+            return responseData;
     }
     public List<GetLessonsResponseData> GetLessonsAuthUser(int userId)
     {
