@@ -7,6 +7,8 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
+[ApiController]
+[Route("api/user")]
 public class UserController : ControllerBase
 {
     private readonly UserManager<ApplicationUser> _userManager;

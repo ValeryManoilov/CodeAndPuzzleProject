@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 
+
+[ApiController]
+[Route("api/admin")]
 public class AdminController : ControllerBase
 {
     private readonly RoleManager<ApplicationRole> _roleManager;
