@@ -40,7 +40,7 @@ public class UserController : ControllerBase
         if (userForm.avatar != null)
         {
             string avatarPath = $"{Guid.NewGuid()}_{userForm.avatar.FileName}";
-            user.AvatarPath = "Avatars/" + avatarPath;
+            user.AvatarPath = $"Content/Avatars/{avatarPath}";
             using (var filestream = new FileStream(user.AvatarPath, FileMode.Create))
             {
                 userForm.avatar.CopyTo(filestream);
@@ -97,9 +97,6 @@ public class UserController : ControllerBase
     [HttpGet("logout")]
     public IActionResult Logout()
     {
-        string authHeader = Request.Headers["Authorization"];
-        string token = authHeader.Substring("Bearer ".Length).Trim();
-        var principal = _tokenService.ValidateToken(token);
         _signInManager.SignOutAsync().Wait();
         return Ok(new {token = ""});
         
@@ -145,7 +142,7 @@ public class UserController : ControllerBase
             System.IO.File.Delete(oldAvatarPath);
         }
         string newAvatarPath = $"{Guid.NewGuid()}_{userForm.avatar.FileName}";
-        user.AvatarPath = $"Avatars/{newAvatarPath}";
+        user.AvatarPath = $"Content/Avatars/{newAvatarPath}";
         using (var filestream = new FileStream(user.AvatarPath, FileMode.Create))
         {
             userForm.avatar.CopyTo(filestream);

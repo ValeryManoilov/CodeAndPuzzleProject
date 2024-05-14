@@ -74,7 +74,6 @@ public class AdminController : ControllerBase
         }
         return NotFound();
     }
-
     [Authorize(Roles = "Admin")]
     [HttpGet("all")]
     public IActionResult All()
