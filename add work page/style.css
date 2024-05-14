@@ -84,12 +84,12 @@ h2 {
     margin-top: 50px;
 }
 
-input {
+input[type=text] {
     border: 1px solid #084887; 
     background: #ffffff;
     outline: none; 
     height: 24px;
-    width: 910px;
+    width: 922px;
     margin-left: 30px;
     color: #000000; 
     font-size: 16px; 
@@ -110,4 +110,36 @@ input {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+#last_button_two {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    width: 1120px;
+}
+
+.last_button_next_and_back {
+    color: #084887;
+    border: 1px solid #084887;
+    border-radius: 100px;
+    padding: 10px 45px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: "Inter", sans-serif;
+    transition: all 400ms;
+}
+
+#last_button_next {
+    margin-left: 20px;
+}
+
+#last_button_next:hover {
+    background-color: #084887;
+    color: #ffffff;
+}
+
+#last_button_back:hover {
+    background-color: #084887;
+    color: #ffffff;
 }

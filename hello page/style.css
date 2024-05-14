@@ -34,13 +34,6 @@ height: 28px;
 }
 
 /*1 блок*/
-
-/* .black_fon {
-    background-color: #1E1E1E;
-    height: 45px;
-    width: 100%;
-} */
-
 #puzl_kod {
     width: 30%;
     padding-left: 35%;
@@ -49,7 +42,7 @@ height: 28px;
 #background_phooto_first_block {
     position: relative;
     width: 100%;
-    height: auto;
+    height: 800px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -129,14 +122,14 @@ h1 {
     padding-left: 35%;
 } 
 
-#block_two_section {
-    /* background-color: #084887; */
-}
 
 /* второй блок */
 #block_two_section {
-
-background-image: url(./allphoto/Frame\1073714144.svg);
+background-image: url(./allphoto/backfon.svg);
+background-repeat: no-repeat;
+background-position: center;
+background-size: cover;
+height: 800px;
 }
 
 #block_two_h2 {
