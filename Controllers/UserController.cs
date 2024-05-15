@@ -29,66 +29,77 @@ public class UserController : ControllerBase
     }
 
 
-    [HttpPost("adduser")]
-    public async Task<IActionResult> CreateUser([FromForm] RegisterUserDataForm userForm)
-{
-    var user = new ApplicationUser{
-        UserName = userForm.UserName,
-        FirstName = userForm.FirstName,
-        LastName = userForm.LastName,
-        DateOfBirth = userForm.DateOfBirth,
-        AvatarPath = "default.png",
-        Email = userForm.Email};
-        if (userForm.avatar != null)
+    [HttpPost("register")]
+    public async Task<IActionResult> CreateUser([FromBody] RegistrationDataForm dataForm)
+    {
+        var user = new ApplicationUser
         {
-            string avatarPath = $"{Guid.NewGuid()}_{userForm.avatar.FileName}";
-            user.AvatarPath = $"Content/Avatars/{avatarPath}";
-            using (var filestream = new FileStream(user.AvatarPath, FileMode.Create))
+            UserName = $"{Guid.NewGuid()}_default",
+            FirstName = "default",
+            LastName = "default",
+            AvatarPath = "Content/Avatars/default.png",
+            Email = dataForm.Email
+        };
+
+        var result = await _userManager.CreateAsync(user, dataForm.Password);
+
+        if (result.Succeeded)
+        {
+
+            await _userManager.AddToRoleAsync(user, "Member");
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var confirmationLink = Url.Action("ConfirmEmail", "User", new { userId = user.Id, token}, Request.Scheme);
+            try
             {
-                userForm.avatar.CopyTo(filestream);
+                await _emailService.SendEmailAsync(user.Email, "Подтверждение почты", confirmationLink, false);
+            }
+            catch (Exception ex)
+            {
+                _userManager.DeleteAsync(user);
+                return BadRequest("Что-то пошло не так. Повтороите попытку");
+            }
+            return Ok();
+        }
+        else
+        {
+            Console.WriteLine(result);
+            return BadRequest();
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> ConfirmEmail(string userId, string token)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user != null && !user.EmailConfirmed)
+        {
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+
+            if (result.Succeeded)
+            {
+                return Ok("Почта успешно подтверждена");
             }
         }
-
-    var result = await _userManager.CreateAsync(user, userForm.Password);
-    if (result.Succeeded)
-    {
-        _signInManager.SignInAsync(user, false).Wait();
-        await _userManager.AddToRoleAsync(user, "Member");
-
-        string subject = "Регистрация";
-        await _emailService.SendEmailAsync(userForm.Email, subject,
-        _emailAnswerPatterns.emailAnswerPatterns[subject], false);
-
-        return Ok(new {
-            token = _tokenService.CreateToken(user.Email, ["Member"]),
-            userRole = await _userManager.GetRolesAsync(user)});
-    }
-    else
-    {
-        Console.WriteLine(result);
         return BadRequest();
     }
-}
-
-
-    [HttpGet("login")]
-    public async Task<IActionResult> Login(string email, string password)
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] RegistrationDataForm dataForm)
     {
-        ApplicationUser user = await _userManager.FindByEmailAsync(email);
+        ApplicationUser user = await _userManager.FindByEmailAsync(dataForm.Email);
         if (user != null)
         {
-            var result = _signInManager.PasswordSignInAsync(user.UserName, password, false, false).Result;
+            var result = _signInManager.PasswordSignInAsync(user.UserName, dataForm.Password, false, false).Result;
             if (result.Succeeded)
             {
                 
                 IList<string> userRoles = await _userManager.GetRolesAsync(user);
 
                 string subject = "Вход в аккаунт";
-                await _emailService.SendEmailAsync(email, subject,
+                await _emailService.SendEmailAsync(dataForm.Email, subject,
                 _emailAnswerPatterns.emailAnswerPatterns[subject] , false);
 
                 return Ok(new {
-                    token = _tokenService.CreateToken(email, userRoles.ToList()),
+                    token = _tokenService.CreateToken(dataForm.Email, userRoles.ToList()),
                     userRole = userRoles
                     });
             }
@@ -119,7 +130,6 @@ public class UserController : ControllerBase
             return Ok(new {data = new {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                DateOfBirth = user.DateOfBirth,
                 UserName = user.UserName,
                 Email = user.Email,
                 AvatarPath = user.AvatarPath
@@ -137,17 +147,16 @@ public class UserController : ControllerBase
         user.FirstName = userForm.FirstName;
         user.LastName = userForm.LastName;
         user.UserName = userForm.UserName;
-        user.DateOfBirth = userForm.DateOfBirth;
-        if (userForm.avatar != null)
+        if (userForm.Avatar != null)
         {
             var oldAvatarPath = user.AvatarPath;
             System.IO.File.Delete(oldAvatarPath);
         }
-        string newAvatarPath = $"{Guid.NewGuid()}_{userForm.avatar.FileName}";
+        string newAvatarPath = $"{Guid.NewGuid()}_{userForm.Avatar.FileName}";
         user.AvatarPath = $"Content/Avatars/{newAvatarPath}";
         using (var filestream = new FileStream(user.AvatarPath, FileMode.Create))
         {
-            userForm.avatar.CopyTo(filestream);
+            userForm.Avatar.CopyTo(filestream);
         }
         await _userManager.UpdateAsync(user);
         
@@ -164,7 +173,7 @@ public class UserController : ControllerBase
 
 
     [HttpGet("firstinitialize")]
-    public IActionResult FirstInitialize()
+    public async Task<IActionResult> FirstInitialize()
     {
         if (!_roleManager.RoleExistsAsync("Admin").Result)
         {
@@ -175,16 +184,20 @@ public class UserController : ControllerBase
                 var adminUser = new ApplicationUser{
                     FirstName = "Санджар",
                     LastName = "Сатлыков",
-                    DateOfBirth = "10.10.2007",
-                    AvatarPath = "default.png",
+                    AvatarPath = "Content/Avatars/default.png",
                     UserName = "satlykovs@gmail.com", 
                     Email = "satlykovs@gmail.com"};
-                var adminCreatingResult = _userManager.CreateAsync(adminUser, "Sanjar10102007!").Result;
+                var adminCreatingResult =_userManager.CreateAsync(adminUser, "Sanjar10102007!").Result;
                 if (adminCreatingResult.Succeeded)
                 {
                     var addingResult = _userManager.AddToRoleAsync(adminUser, "Admin").Result;
                     if (addingResult.Succeeded)
                     {
+                        var managerRole = new ApplicationRole{Name = "Manager"};
+                        var memberRole = new ApplicationRole{Name = "Member"};
+                        await _roleManager.CreateAsync(managerRole);
+                        await _roleManager.CreateAsync(memberRole);
+
                         return Ok();
                     }
                 }

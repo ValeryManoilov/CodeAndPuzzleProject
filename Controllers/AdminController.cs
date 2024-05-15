@@ -21,31 +21,6 @@ public class AdminController : ControllerBase
 
 
     [Authorize(Roles = "Admin")]
-    [HttpGet("addrole")]
-    public async Task<IActionResult> CreateRole(string roleName)
-    {
-        var roleExists = await _roleManager.RoleExistsAsync(roleName);
-        if (roleExists)
-        {
-            return BadRequest("Роль существует");
-
-        }
-
-        var role = new ApplicationRole{Name = roleName};
-        var result = await _roleManager.CreateAsync(role);
-
-        if (result.Succeeded)
-        {
-            return Ok(_roleManager.Roles.ToList());
-
-        }
-        else
-        {   
-            return BadRequest();
-
-        }
-    }
-    [Authorize(Roles = "Admin")]
     [HttpGet("giverole")]
     public async Task<IActionResult> GiveRole(string userName, string roleName)
     {
@@ -60,7 +35,7 @@ public class AdminController : ControllerBase
                     var userRoles = await _userManager.GetRolesAsync(user);
                     if (userRoles.Contains("Admin"))
                     {
-                        userRoles.Remove("Admin");
+                        return BadRequest("Попытка изменить роль администратора");
                     }
                     await _userManager.RemoveFromRolesAsync(user, userRoles);
                     await _userManager.AddToRoleAsync(user, roleName);
