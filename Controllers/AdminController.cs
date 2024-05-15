@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 
 [ApiController]
@@ -11,12 +12,15 @@ public class AdminController : ControllerBase
     private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IEmailService _emailService;
+    private readonly ITokenService _tokenSevice;
     public AdminController(RoleManager<ApplicationRole> roleManager,
-     UserManager<ApplicationUser> userManager, IEmailService emailService)
+     UserManager<ApplicationUser> userManager, IEmailService emailService,
+     ITokenService tokenService)
     {
         _userManager = userManager;
         _roleManager = roleManager;
         _emailService = emailService;
+        _tokenSevice = tokenService;
     }
 
 
@@ -24,19 +28,25 @@ public class AdminController : ControllerBase
     [HttpGet("giverole")]
     public async Task<IActionResult> GiveRole(string userName, string roleName)
     {
-        if (roleName != "Admin")
+        string authHeader = Request.Headers["Authorization"];
+        string token = authHeader.Substring("Bearer ".Length).Trim();
+        var principals = _tokenSevice.ValidateToken(token);
+
+        if (principals != null)
         {
-        
-            ApplicationUser user = await _userManager.FindByNameAsync(userName);
-            if (user != null)
+            if (roleName != "Admin")
             {
-                if (_roleManager.FindByNameAsync(roleName) != null)
+        
+                ApplicationUser user = await _userManager.FindByNameAsync(userName);
+                if (user != null)
                 {
-                    var userRoles = await _userManager.GetRolesAsync(user);
-                    if (userRoles.Contains("Admin"))
+                    if (_roleManager.FindByNameAsync(roleName) != null)
                     {
-                        return BadRequest("Попытка изменить роль администратора");
-                    }
+                        var userRoles = await _userManager.GetRolesAsync(user);
+                        if (userRoles.Contains("Admin"))
+                        {
+                            return BadRequest("Попытка изменить роль администратора");
+                        }
                     await _userManager.RemoveFromRolesAsync(user, userRoles);
                     await _userManager.AddToRoleAsync(user, roleName);
                     var newRole = await _userManager.GetRolesAsync(user);
@@ -56,12 +66,12 @@ public class AdminController : ControllerBase
     [HttpGet("all")]
     public IActionResult All()
     {
-        if (User.Identity.IsAuthenticated)
+        string authHeader = Request.Headers["Authorization"];
+        string token = authHeader.Substring("Bearer ".Length).Trim();
+        var principals = _tokenSevice.ValidateToken(token);
+
+        if (principals != null)
         {
-            foreach (var role in _roleManager.Roles)
-            {
-                Console.WriteLine(role);
-            }
             var users = _userManager.Users.ToList();
             var responseData = users.Select(u => new 
             {
@@ -73,6 +83,23 @@ public class AdminController : ControllerBase
             return Ok(responseData);
         }
         return NotFound("Не авторизован");
-    }   
+    }
+
+    [HttpGet("getuser")]
+    public async Task<IActionResult> GetUser(string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user != null)
+        {
+            return Ok(new
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Roles = await _userManager.GetRolesAsync(user)
+                
+            });
+        }
+        return BadRequest("Пользователь не найден");
+    }
 
 }   

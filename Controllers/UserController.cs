@@ -151,13 +151,14 @@ public class UserController : ControllerBase
         {
             var oldAvatarPath = user.AvatarPath;
             System.IO.File.Delete(oldAvatarPath);
-        }
-        string newAvatarPath = $"{Guid.NewGuid()}_{userForm.Avatar.FileName}";
-        user.AvatarPath = $"Content/Avatars/{newAvatarPath}";
-        using (var filestream = new FileStream(user.AvatarPath, FileMode.Create))
+            string newAvatarPath = $"{Guid.NewGuid()}_{userForm.Avatar.FileName}";
+            user.AvatarPath = $"Content/Avatars/{newAvatarPath}";
+            using (var filestream = new FileStream(user.AvatarPath, FileMode.Create))
         {
             userForm.Avatar.CopyTo(filestream);
         }
+        }
+
         await _userManager.UpdateAsync(user);
         
         string subject = "Изменены личные данные";
@@ -191,6 +192,8 @@ public class UserController : ControllerBase
                 if (adminCreatingResult.Succeeded)
                 {
                     var addingResult = _userManager.AddToRoleAsync(adminUser, "Admin").Result;
+                    string emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(adminUser);
+                    await _userManager.ConfirmEmailAsync(adminUser, emailConfirmationToken);
                     if (addingResult.Succeeded)
                     {
                         var managerRole = new ApplicationRole{Name = "Manager"};

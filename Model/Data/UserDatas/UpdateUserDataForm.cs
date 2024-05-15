@@ -12,6 +12,5 @@ public class UpdateUserDataForm
     public string Email { get; set; }
     [Required]
     public string UserName { get; set; }
-    [Required]
     public IFormFile? Avatar { get; set; }
 }
