@@ -6,8 +6,8 @@ document.getElementById('save').addEventListener('click', function() {
     formData.append('Email', document.getElementById('email').value);
     formData.append('UserName', document.getElementById('username').value);
     
-    // const avatarFile = document.getElementById('avatarInput').files[0];
-    // formData.append('avatar', avatarFile);
+    const avatarFile = document.getElementById('avatarInput').files[0];
+    formData.append('avatar', avatarFile);
     
 
     fetch('http://localhost:5083/api/user/adduser', {
