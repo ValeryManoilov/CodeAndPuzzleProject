@@ -29,50 +29,58 @@ public class UserController : ControllerBase
     }
 
 
-    [HttpPost("adduser")]
-    public async Task<IActionResult> CreateUser([FromForm] RegisterUserDataForm userForm)
-{
-    var user = new ApplicationUser
+    [HttpPost("register")]
+    public async Task<IActionResult> CreateUser(string email, string password, string userName)
     {
-        UserName = userForm.UserName,
-        FirstName = userForm.FirstName,
-        LastName = userForm.LastName,
-        DateOfBirth = userForm.DateOfBirth,
-        AvatarPath = "default.png",
-        Email = userForm.Email
-        };
-        if (userForm.avatar != null)
+        var user = new ApplicationUser
         {
-            string avatarPath = $"{Guid.NewGuid()}_{userForm.avatar.FileName}";
-            user.AvatarPath = $"Content/Avatars/{avatarPath}";
-            using (var filestream = new FileStream(user.AvatarPath, FileMode.Create))
+            UserName = userName,
+            FirstName = "default",
+            LastName = "default",
+            AvatarPath = "Content/Avatars/default.png",
+            Email = email
+        };
+
+        var result = await _userManager.CreateAsync(user, password);
+        if (result.Succeeded)
+        {
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var confirmationLink = Url.Action("ConfirmEmail", "User", new { userId = user.Id, token}, Request.Scheme);
+            await _emailService.SendEmailAsync(user.Email, "Подтверждение почты", confirmationLink, false);
+            return Ok();
+        }
+        else
+        {
+            Console.WriteLine(result);
+            return BadRequest();
+        }
+    }
+        // if (userForm.avatar != null)
+        // {
+        //     string avatarPath = $"{Guid.NewGuid()}_{userForm.Avatar.FileName}";
+        //     user.AvatarPath = $"Content/Avatars/{avatarPath}";
+        //     using (var filestream = new FileStream(user.AvatarPath, FileMode.Create))
+        //     {
+        //         userForm.Avatar.CopyTo(filestream);
+        //     }
+        // }
+
+
+    [HttpGet]
+    public async Task<IActionResult> ConfirmEmail(string userId, string token)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user != null && !user.EmailConfirmed)
+        {
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+
+            if (result.Succeeded)
             {
-                userForm.avatar.CopyTo(filestream);
+                return Ok();
             }
         }
-
-    var result = await _userManager.CreateAsync(user, userForm.Password);
-    if (result.Succeeded)
-    {
-        _signInManager.SignInAsync(user, false).Wait();
-        await _userManager.AddToRoleAsync(user, "Member");
-
-        string subject = "Регистрация";
-        await _emailService.SendEmailAsync(userForm.Email, subject,
-        _emailAnswerPatterns.emailAnswerPatterns[subject], false);
-
-        return Ok(new {
-            token = _tokenService.CreateToken(user.Email, ["Member"]),
-            userRole = await _userManager.GetRolesAsync(user)});
-    }
-    else
-    {
-        Console.WriteLine(result);
         return BadRequest();
     }
-}
-
-
     [HttpGet("login")]
     public async Task<IActionResult> Login(string email, string password)
     {
@@ -121,7 +129,6 @@ public class UserController : ControllerBase
             return Ok(new {data = new {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                DateOfBirth = user.DateOfBirth,
                 UserName = user.UserName,
                 Email = user.Email,
                 AvatarPath = user.AvatarPath
@@ -139,17 +146,16 @@ public class UserController : ControllerBase
         user.FirstName = userForm.FirstName;
         user.LastName = userForm.LastName;
         user.UserName = userForm.UserName;
-        user.DateOfBirth = userForm.DateOfBirth;
-        if (userForm.avatar != null)
+        if (userForm.Avatar != null)
         {
             var oldAvatarPath = user.AvatarPath;
             System.IO.File.Delete(oldAvatarPath);
         }
-        string newAvatarPath = $"{Guid.NewGuid()}_{userForm.avatar.FileName}";
+        string newAvatarPath = $"{Guid.NewGuid()}_{userForm.Avatar.FileName}";
         user.AvatarPath = $"Content/Avatars/{newAvatarPath}";
         using (var filestream = new FileStream(user.AvatarPath, FileMode.Create))
         {
-            userForm.avatar.CopyTo(filestream);
+            userForm.Avatar.CopyTo(filestream);
         }
         await _userManager.UpdateAsync(user);
         
@@ -177,8 +183,7 @@ public class UserController : ControllerBase
                 var adminUser = new ApplicationUser{
                     FirstName = "Санджар",
                     LastName = "Сатлыков",
-                    DateOfBirth = "10.10.2007",
-                    AvatarPath = "default.png",
+                    AvatarPath = "Content/Avatars/default.png",
                     UserName = "satlykovs@gmail.com", 
                     Email = "satlykovs@gmail.com"};
                 var adminCreatingResult = _userManager.CreateAsync(adminUser, "Sanjar10102007!").Result;

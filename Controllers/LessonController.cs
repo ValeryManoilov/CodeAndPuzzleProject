@@ -8,7 +8,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
 [ApiController]
-[Route("api/lessons/")]
+[Route("api/lessons")]
 public class LessonController : ControllerBase
 {
     private readonly UserManager<ApplicationUser> _userManager;
