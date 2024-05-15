@@ -30,7 +30,7 @@ public class UserController : ControllerBase
 
 
     [HttpPost("register")]
-    public async Task<IActionResult> CreateUser(string email, string password)
+    public async Task<IActionResult> CreateUser([FromBody] RegistrationDataForm dataForm)
     {
         var user = new ApplicationUser
         {
@@ -38,10 +38,10 @@ public class UserController : ControllerBase
             FirstName = "default",
             LastName = "default",
             AvatarPath = "Content/Avatars/default.png",
-            Email = email
+            Email = dataForm.Email
         };
 
-        var result = await _userManager.CreateAsync(user, password);
+        var result = await _userManager.CreateAsync(user, dataForm.Password);
 
         if (result.Succeeded)
         {
@@ -66,16 +66,6 @@ public class UserController : ControllerBase
             return BadRequest();
         }
     }
-        // if (userForm.avatar != null)
-        // {
-        //     string avatarPath = $"{Guid.NewGuid()}_{userForm.Avatar.FileName}";
-        //     user.AvatarPath = $"Content/Avatars/{avatarPath}";
-        //     using (var filestream = new FileStream(user.AvatarPath, FileMode.Create))
-        //     {
-        //         userForm.Avatar.CopyTo(filestream);
-        //     }
-        // }
-
 
     [HttpGet]
     public async Task<IActionResult> ConfirmEmail(string userId, string token)
@@ -87,29 +77,29 @@ public class UserController : ControllerBase
 
             if (result.Succeeded)
             {
-                return Ok();
+                return Ok("Почта успешно подтверждена");
             }
         }
         return BadRequest();
     }
-    [HttpGet("login")]
-    public async Task<IActionResult> Login(string email, string password)
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] RegistrationDataForm dataForm)
     {
-        ApplicationUser user = await _userManager.FindByEmailAsync(email);
+        ApplicationUser user = await _userManager.FindByEmailAsync(dataForm.Email);
         if (user != null)
         {
-            var result = _signInManager.PasswordSignInAsync(user.UserName, password, false, false).Result;
+            var result = _signInManager.PasswordSignInAsync(user.UserName, dataForm.Password, false, false).Result;
             if (result.Succeeded)
             {
                 
                 IList<string> userRoles = await _userManager.GetRolesAsync(user);
 
                 string subject = "Вход в аккаунт";
-                await _emailService.SendEmailAsync(email, subject,
+                await _emailService.SendEmailAsync(dataForm.Email, subject,
                 _emailAnswerPatterns.emailAnswerPatterns[subject] , false);
 
                 return Ok(new {
-                    token = _tokenService.CreateToken(email, userRoles.ToList()),
+                    token = _tokenService.CreateToken(dataForm.Email, userRoles.ToList()),
                     userRole = userRoles
                     });
             }
