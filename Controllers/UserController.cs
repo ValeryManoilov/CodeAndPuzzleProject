@@ -161,6 +161,7 @@ public class UserController : ControllerBase
         if (userForm.Avatar != null)
         {
             var oldAvatarPath = user.AvatarPath;
+            if (oldAvatarPath != "Content/Avatars/default.png")
             System.IO.File.Delete(oldAvatarPath);
             string newAvatarPath = $"{Guid.NewGuid()}_{userForm.Avatar.FileName}";
             user.AvatarPath = $"Content/Avatars/{newAvatarPath}";

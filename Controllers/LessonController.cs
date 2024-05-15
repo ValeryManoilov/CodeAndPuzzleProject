@@ -52,6 +52,10 @@ public class LessonController : ControllerBase
     [HttpGet("mark/{lessonId}/{mark}")]
     public IActionResult Authorize(int lessonId, int mark)
     {
+        if (mark > 10)
+        {
+            return NotFound();
+        }
         string authHeader = Request.Headers["Authorization"];
         string token = authHeader.Substring("Bearer ".Length).Trim();
         var principal = _tokenService.ValidateToken(token);
