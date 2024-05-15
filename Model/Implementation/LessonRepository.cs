@@ -7,7 +7,7 @@ public class LessonRepository : ILessonRepository
     {
         _lessonContext = lessonContext;
     }
-    public void Add(LessonDataForm dataForm)
+    public async Task Add(LessonDataForm dataForm)
     {
         var lesson = new ApplicationLesson
         {
@@ -39,7 +39,7 @@ public class LessonRepository : ILessonRepository
                 filePath = $"Content/LessonPhotos/{filePath}";
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    photo.CopyTo(fileStream);
+                    await photo.CopyToAsync(fileStream);
                 }
                 lessonPhotos.Add(new LessonPhoto{LessonId = lesson.Id, Path = filePath});
             }
@@ -53,7 +53,7 @@ public class LessonRepository : ILessonRepository
                 filePath = $"Content/LessonVideos/{filePath}";
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    video.CopyTo(fileStream);
+                    await video.CopyToAsync(fileStream);
                 }
                 lessonVideos.Add(new LessonVideo{LessonId = lesson.Id, Path = filePath});
             }
@@ -67,7 +67,7 @@ public class LessonRepository : ILessonRepository
                 filePath = $"Content/LessonPresentations/{filePath}";
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    presentation.CopyTo(fileStream);
+                    await presentation.CopyToAsync(fileStream);
                 }
                 lessonPresentations.Add(new LessonPresentation{LessonId = lesson.Id, Path = filePath});
             }
@@ -101,10 +101,10 @@ public class LessonRepository : ILessonRepository
             Rating = 0
             });
 
-        _lessonContext.SaveChanges();
+        await _lessonContext.SaveChangesAsync();
     }
 
-    public void Delete(int lessonId)
+    public async Task Delete(int lessonId)
     {
         var lessonToDelete = _lessonContext.Lessons.FirstOrDefault(l => l.Id == lessonId);
         if (lessonToDelete != null)
@@ -149,11 +149,11 @@ public class LessonRepository : ILessonRepository
             _lessonContext.UserRatedLessons.RemoveRange(userRatedLessons);
             _lessonContext.UserFavouriteLessons.RemoveRange(UserFavouriteLesson);
 
-            _lessonContext.SaveChanges();
+            await _lessonContext.SaveChangesAsync();
         }
     }
 
-    public void Edit(LessonDataForm dataForm)
+    public async Task Edit(LessonDataForm dataForm)
     {
         var lesson = _lessonContext.Lessons.FirstOrDefault(l => l.Id == dataForm.Id);
         if (lesson != null)
@@ -189,7 +189,7 @@ public class LessonRepository : ILessonRepository
             _lessonContext.LessonVideos.RemoveRange(videosToDelete);
             _lessonContext.LessonPresentations.RemoveRange(presentationToDelete);
 
-                    string text = dataForm.LessonText;
+            string text = dataForm.LessonText;
         LessonText lessonText = new LessonText{LessonId = lesson.Id, Text = text};
         
         List<LessonLink> lessonLinks = new List<LessonLink>();
@@ -211,7 +211,7 @@ public class LessonRepository : ILessonRepository
                 filePath = $"Content/LessonPhotos/{filePath}";
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    photo.CopyTo(fileStream);
+                    await photo.CopyToAsync(fileStream);
                 }
                 lessonPhotos.Add(new LessonPhoto{LessonId = lesson.Id, Path = filePath});
             }
@@ -225,7 +225,7 @@ public class LessonRepository : ILessonRepository
                 filePath = $"Content/LessonVideos/{filePath}";
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    video.CopyTo(fileStream);
+                    await video.CopyToAsync(fileStream);
                 }
                 lessonVideos.Add(new LessonVideo{LessonId = lesson.Id, Path = filePath});
             }
@@ -239,7 +239,7 @@ public class LessonRepository : ILessonRepository
                 filePath = $"Content/LessonPresentations/{filePath}";
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    presentation.CopyTo(fileStream);
+                    await presentation.CopyToAsync(fileStream);
                 }
                 lessonPresentations.Add(new LessonPresentation{LessonId = lesson.Id, Path = filePath});
             }
@@ -250,27 +250,27 @@ public class LessonRepository : ILessonRepository
         _lessonContext.LessonTexts.Add(lessonText);
         if (lessonLinks != null)
         {
-            _lessonContext.LessonLinks.AddRange(lessonLinks);
+            await _lessonContext.LessonLinks.AddRangeAsync(lessonLinks);
         }
         if (lessonPhotos != null)
         {
-            _lessonContext.LessonPhotos.AddRange(lessonPhotos);
+            await _lessonContext.LessonPhotos.AddRangeAsync(lessonPhotos);
         }
         if (lessonVideos != null)
         {
-            _lessonContext.LessonVideos.AddRange(lessonVideos);
+            await _lessonContext.LessonVideos.AddRangeAsync(lessonVideos);
         }
         if (lessonPresentations != null)
         {
-            _lessonContext.LessonPresentations.AddRange(lessonPresentations);
+            await _lessonContext.LessonPresentations.AddRangeAsync(lessonPresentations);
         }
-        _lessonContext.LessonTags.AddRange(lessonTags);
+        await _lessonContext.LessonTags.AddRangeAsync(lessonTags);
 
-            _lessonContext.SaveChanges();
+            await _lessonContext.SaveChangesAsync();
         }
     }
 
-    public void Mark(int userId, int lessonId, int mark)
+    public async Task Mark(int userId, int lessonId, int mark)
     {
         var curMark = _lessonContext.LessonRatings.FirstOrDefault(r => r.LessonId == lessonId);
         
@@ -296,12 +296,12 @@ public class LessonRepository : ILessonRepository
                     LessonId = lessonId,
                     UserId = userId
                 });
-                _lessonContext.SaveChanges();
+                await _lessonContext.SaveChangesAsync();
             }
         }
     }
 
-    public void AddFavourite(int userId, int lessonId)
+    public async Task AddFavourite(int userId, int lessonId)
     {
         var favouriteLesson = _lessonContext.UserFavouriteLessons
         .FirstOrDefault(l => l.LessonId == lessonId && l.UserId == userId);
@@ -313,9 +313,9 @@ public class LessonRepository : ILessonRepository
                 LessonId = lessonId
             });
         }
-        _lessonContext.SaveChanges();
+        await _lessonContext.SaveChangesAsync();
     }
-    public void DeleteFavourite(int userId, int lessonId)
+    public async Task DeleteFavourite(int userId, int lessonId)
     {
         var favouriteLesson = _lessonContext.UserFavouriteLessons
         .FirstOrDefault(l => l.LessonId == lessonId && l.UserId == userId);
@@ -323,7 +323,7 @@ public class LessonRepository : ILessonRepository
         {
             _lessonContext.UserFavouriteLessons.Remove(favouriteLesson);
         }
-        _lessonContext.SaveChanges();
+        await _lessonContext.SaveChangesAsync();
     }
 
     public List<GetLessonsResponseData> GetLessonsNonAuthUser(List<string> tags)

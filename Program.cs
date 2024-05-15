@@ -116,6 +116,11 @@ builder.Services.AddScoped<ILessonService>(provider =>
     return lessonService;
 });
 
+builder.Services.AddSingleton<IUserValidatorService>(provider =>
+{
+    IUserValidatorService userValidatorService = new UserValidatorService();
+    return userValidatorService;
+});
 
 builder.Services.AddSignalR();
 

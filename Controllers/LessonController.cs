@@ -25,9 +25,9 @@ public class LessonController : ControllerBase
 
     [Authorize(Roles = "Manager")]
     [HttpPost("add")]
-    public IActionResult Add([FromForm] LessonDataForm dataForm)
+    public async Task<IActionResult> Add([FromForm] LessonDataForm dataForm)
     {
-        _lessonService.Add(dataForm);
+        await _lessonService.Add(dataForm);
         return Ok();
     }
 
@@ -52,9 +52,14 @@ public class LessonController : ControllerBase
     [HttpGet("mark/{lessonId}/{mark}")]
     public IActionResult Authorize(int lessonId, int mark)
     {
+        if (mark > 10)
+        {
+            return NotFound();
+        }
         string authHeader = Request.Headers["Authorization"];
         string token = authHeader.Substring("Bearer ".Length).Trim();
         var principal = _tokenService.ValidateToken(token);
+        
         var email = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
         var user = _userManager.FindByEmailAsync(email);
         if (user != null)
@@ -121,7 +126,12 @@ public class LessonController : ControllerBase
     [HttpGet("getlesson/{lessonId}")]
     public IActionResult GetLesson(int lessonId)
     {
-        return Ok(_lessonService.GetLesson(lessonId));
+        var lesson = _lessonService.GetLesson(lessonId);
+        if (lesson != null)
+        {
+            return Ok(lesson);
+        }
+        return NotFound();
     }
 
 
