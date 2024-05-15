@@ -31,13 +31,13 @@ public class LessonService : ILessonService
         _lessonRepository.DeleteFavourite(userId, lessonId);
     }
 
-    public List<GetLessonsResponseData> GetLessonsNonAuthUser()
+    public List<GetLessonsResponseData> GetLessonsNonAuthUser(List<string> tags)
     {
-        return _lessonRepository.GetLessonsNonAuthUser();
+        return _lessonRepository.GetLessonsNonAuthUser(tags);
     }
-    public List<GetLessonsResponseData> GetLessonsAuthUser(int userId)
+    public List<GetLessonsResponseData> GetLessonsAuthUser(int userId, List<string> tags)
     {
-        return _lessonRepository.GetLessonsAuthUser(userId);
+        return _lessonRepository.GetLessonsAuthUser(userId, tags);
     }
     public GetLessonResponseData GetLesson(int lessonId)
     {

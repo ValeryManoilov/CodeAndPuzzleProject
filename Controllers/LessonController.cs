@@ -98,13 +98,13 @@ public class LessonController : ControllerBase
         return BadRequest();
     }
 
-    [HttpGet("getlessonsnonauthuser")]
-    public IActionResult GetLessonsNonAuthUser()
+    [HttpPost("getlessonsnonauthuser")]
+    public IActionResult GetLessonsNonAuthUser(List<string> tags)
     {
-        return Ok(_lessonService.GetLessonsNonAuthUser());
+        return Ok(_lessonService.GetLessonsNonAuthUser(tags));
     }
-    [HttpGet("getlessonsauthuser")]
-    public IActionResult GetLessonsAuthUser()
+    [HttpPost("getlessonsauthuser")]
+    public IActionResult GetLessonsAuthUser(List<string> tags)
     {
         string authHeader = Request.Headers["Authorization"];
         string token = authHeader.Substring("Bearer ".Length).Trim();
@@ -113,7 +113,7 @@ public class LessonController : ControllerBase
         var user = _userManager.FindByEmailAsync(email);
         if (user != null)
         {
-            return Ok(_lessonService.GetLessonsAuthUser(user.Id));
+            return Ok(_lessonService.GetLessonsAuthUser(user.Id, tags));
         }
         return BadRequest("Не авторизован");
     }

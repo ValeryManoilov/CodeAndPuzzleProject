@@ -328,15 +328,16 @@ public class LessonRepository : ILessonRepository
 
     public List<GetLessonsResponseData> GetLessonsNonAuthUser(List<string> tags)
     {
+        List<ApplicationLesson> lessons = new List<ApplicationLesson>();
         if (tags.Count() == 0)
         {
-            var lessons = _lessonContext.Lessons.ToList();
+            lessons = _lessonContext.Lessons.ToList();
         }
         else
         {
             List<int> lessonIds = _lessonContext.LessonTags
             .Where(t => tags.Contains(t.TagName)).Select(t => t.LessonId).ToList();
-            var lessons = _lessonContext.Lessons.Where(l => lessonIds.Contains(l.Id)).ToList();
+            lessons = _lessonContext.Lessons.Where(l => lessonIds.Contains(l.Id)).ToList();
         }
 
         List<GetLessonsResponseData> responseData = lessons.Select(l => new GetLessonsResponseData
@@ -349,18 +350,30 @@ public class LessonRepository : ILessonRepository
             
             return responseData;
     }
-    public List<GetLessonsResponseData> GetLessonsAuthUser(int userId)
+    public List<GetLessonsResponseData> GetLessonsAuthUser(int userId, List<string> tags)
     {
-        List<ApplicationLesson> lessons = _lessonContext.Lessons.ToList();
+        List<ApplicationLesson> lessons = new List<ApplicationLesson>();
+        if (tags.Count() == 0)
+        {
+            lessons = _lessonContext.Lessons.ToList();
+        }
+        else
+        {
+            List<int> lessonIds = _lessonContext.LessonTags
+            .Where(t => tags.Contains(t.TagName)).Select(t => t.LessonId).ToList();
+            lessons = _lessonContext.Lessons.Where(l => lessonIds.Contains(l.Id)).ToList();
+        }
+
         List<GetLessonsResponseData> responseData = lessons.Select(l => new GetLessonsResponseData
         {
             Lesson = l,
             Tags = _lessonContext.LessonTags.Where(t => t.LessonId == l.Id).ToList(),
-            Rating = _lessonContext.LessonRatings.FirstOrDefault(l => l.LessonId == l.Id).Rating,
-            isFav = (_lessonContext.UserRatedLessons.FirstOrDefault(l => l.LessonId == l.Id && l.UserId == userId) != null)
-
+            Rating = _lessonContext.LessonRatings.FirstOrDefault(r => r.LessonId == l.Id).Rating,
+            isFav = (_lessonContext.UserFavouriteLessons
+            .FirstOrDefault(f => f.LessonId == l.Id && f.UserId == userId) != null)
         }).ToList();
-        return responseData; 
+            
+            return responseData; 
     }
 
 
