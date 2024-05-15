@@ -30,11 +30,11 @@ public class UserController : ControllerBase
 
 
     [HttpPost("register")]
-    public async Task<IActionResult> CreateUser(string email, string password, string userName)
+    public async Task<IActionResult> CreateUser(string email, string password)
     {
         var user = new ApplicationUser
         {
-            UserName = userName,
+            UserName = $"{Guid.NewGuid()}_default",
             FirstName = "default",
             LastName = "default",
             AvatarPath = "Content/Avatars/default.png",
@@ -42,11 +42,22 @@ public class UserController : ControllerBase
         };
 
         var result = await _userManager.CreateAsync(user, password);
+
         if (result.Succeeded)
         {
+
+            await _userManager.AddToRoleAsync(user, "Member");
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var confirmationLink = Url.Action("ConfirmEmail", "User", new { userId = user.Id, token}, Request.Scheme);
-            await _emailService.SendEmailAsync(user.Email, "Подтверждение почты", confirmationLink, false);
+            try
+            {
+                await _emailService.SendEmailAsync(user.Email, "Подтверждение почты", confirmationLink, false);
+            }
+            catch (Exception ex)
+            {
+                _userManager.DeleteAsync(user);
+                return BadRequest("Что-то пошло не так. Повтороите попытку");
+            }
             return Ok();
         }
         else
@@ -172,7 +183,7 @@ public class UserController : ControllerBase
 
 
     [HttpGet("firstinitialize")]
-    public IActionResult FirstInitialize()
+    public async Task<IActionResult> FirstInitialize()
     {
         if (!_roleManager.RoleExistsAsync("Admin").Result)
         {
@@ -186,12 +197,17 @@ public class UserController : ControllerBase
                     AvatarPath = "Content/Avatars/default.png",
                     UserName = "satlykovs@gmail.com", 
                     Email = "satlykovs@gmail.com"};
-                var adminCreatingResult = _userManager.CreateAsync(adminUser, "Sanjar10102007!").Result;
+                var adminCreatingResult =_userManager.CreateAsync(adminUser, "Sanjar10102007!").Result;
                 if (adminCreatingResult.Succeeded)
                 {
                     var addingResult = _userManager.AddToRoleAsync(adminUser, "Admin").Result;
                     if (addingResult.Succeeded)
                     {
+                        var managerRole = new ApplicationRole{Name = "Manager"};
+                        var memberRole = new ApplicationRole{Name = "Member"};
+                        await _roleManager.CreateAsync(managerRole);
+                        await _roleManager.CreateAsync(memberRole);
+
                         return Ok();
                     }
                 }
