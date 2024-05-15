@@ -57,11 +57,13 @@ public class AdminController : ControllerBase
                         false);
                     
                     return Ok(newRole);
-                }    
+                    }    
+                }
             }
         }
         return NotFound();
     }
+       
     [Authorize(Roles = "Admin")]
     [HttpGet("all")]
     public IActionResult All()
