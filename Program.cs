@@ -1,5 +1,3 @@
-
-
 using Microsoft.AspNetCore.Authorization;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
@@ -122,12 +120,25 @@ builder.Services.AddSingleton<IUserValidatorService>(provider =>
     return userValidatorService;
 });
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name : MyAllowSpecificOrigins,
+            builder => 
+            {
+                builder.WithOrigins("http://localhost:5083");
+            });
+});
+
+
 builder.Services.AddSignalR();
 
 var app = builder.Build();
-
+app.UseRouting();
+app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthentication();
 app.UseAuthorization();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -139,7 +150,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseAuthorization();
 
 
 
