@@ -4450,19 +4450,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Evgen\\.nuget\\packages\\": {}
+    "C:\\Users\\admin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Evgen\\Desktop\\CodeAndPuzzleProject1\\CodeAndPuzzleProject\\CodeAndPuzzleProject.csproj",
+      "projectUniqueName": "C:\\Users\\admin\\Новая папка\\CodeAndPuzzleProject-2\\CodeAndPuzzleProject.csproj",
       "projectName": "CodeAndPuzzleProject",
-      "projectPath": "C:\\Users\\Evgen\\Desktop\\CodeAndPuzzleProject1\\CodeAndPuzzleProject\\CodeAndPuzzleProject.csproj",
-      "packagesPath": "C:\\Users\\Evgen\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Evgen\\Desktop\\CodeAndPuzzleProject1\\CodeAndPuzzleProject\\obj\\",
+      "projectPath": "C:\\Users\\admin\\Новая папка\\CodeAndPuzzleProject-2\\CodeAndPuzzleProject.csproj",
+      "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\admin\\Новая папка\\CodeAndPuzzleProject-2\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Evgen\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -4480,6 +4480,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -4550,7 +4555,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
