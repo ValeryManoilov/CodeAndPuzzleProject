@@ -1,5 +1,3 @@
-
-
 using Microsoft.AspNetCore.Authorization;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
