@@ -5,30 +5,30 @@ public class LessonService : ILessonService
     {
         _lessonRepository = lessonRepository;
     }
-    public void Add(LessonDataForm dataForm)
+    public async Task Add(LessonDataForm dataForm)
     {
-        _lessonRepository.Add(dataForm);
+        await _lessonRepository.Add(dataForm);
     }
-    public void Delete(int lessonId)
+    public async Task Delete(int lessonId)
     {
-        _lessonRepository.Delete(lessonId);
+        await _lessonRepository.Delete(lessonId);
     }
-    public void Edit(LessonDataForm lessonDataForm)
+    public async Task Edit(LessonDataForm lessonDataForm)
     {
-        _lessonRepository.Edit(lessonDataForm);
+        await _lessonRepository.Edit(lessonDataForm);
     }
-    public void Mark(int userId, int lessonId, int mark)
+    public async Task Mark(int userId, int lessonId, int mark)
     {
-        _lessonRepository.Mark(userId, lessonId, mark);
+        await _lessonRepository.Mark(userId, lessonId, mark);
     }
-    public void AddFavourite(int userId, int lessonId)
+    public async Task AddFavourite(int userId, int lessonId)
     {
-        _lessonRepository.AddFavourite(userId, lessonId);
+       await  _lessonRepository.AddFavourite(userId, lessonId);
     }
 
-    public void DeleteFavourite(int userId, int lessonId)
+    public async Task DeleteFavourite(int userId, int lessonId)
     {
-        _lessonRepository.DeleteFavourite(userId, lessonId);
+        await _lessonRepository.DeleteFavourite(userId, lessonId);
     }
 
     public List<GetLessonsResponseData> GetLessonsNonAuthUser(List<string> tags)

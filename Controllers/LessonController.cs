@@ -25,9 +25,9 @@ public class LessonController : ControllerBase
 
     [Authorize(Roles = "Manager")]
     [HttpPost("add")]
-    public IActionResult Add([FromForm] LessonDataForm dataForm)
+    public async Task<IActionResult> Add([FromForm] LessonDataForm dataForm)
     {
-        _lessonService.Add(dataForm);
+        await _lessonService.Add(dataForm);
         return Ok();
     }
 
@@ -121,7 +121,12 @@ public class LessonController : ControllerBase
     [HttpGet("getlesson/{lessonId}")]
     public IActionResult GetLesson(int lessonId)
     {
-        return Ok(_lessonService.GetLesson(lessonId));
+        var lesson = _lessonService.GetLesson(lessonId);
+        if (lesson != null)
+        {
+            return Ok(lesson);
+        }
+        return NotFound();
     }
 
 

@@ -17,21 +17,30 @@ public class UserController : ControllerBase
     private readonly IEmailService _emailService;
     private readonly ITokenService _tokenService;
     private readonly EmailAnswerPatterns _emailAnswerPatterns = new EmailAnswerPatterns();
+    private readonly IUserValidatorService _userValidatorService;
 
     public UserController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
-     RoleManager<ApplicationRole> roleManager, IEmailService emailService, ITokenService tokenService)
+     RoleManager<ApplicationRole> roleManager, IEmailService emailService,
+     ITokenService tokenService, IUserValidatorService userValidatorService)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _roleManager = roleManager;
         _emailService = emailService;
         _tokenService = tokenService;
+        _userValidatorService = userValidatorService;
     }
 
 
     [HttpPost("register")]
     public async Task<IActionResult> CreateUser([FromBody] RegistrationDataForm dataForm)
     {
+        if (!_userValidatorService.ValidatePassword(dataForm.Password) ||
+        !_userValidatorService.ValidateEmail(dataForm.Email))
+        {
+            return BadRequest("Почта или пароль введены неверно");
+        };
+        
         var user = new ApplicationUser
         {
             UserName = $"{Guid.NewGuid()}_default",
@@ -85,9 +94,11 @@ public class UserController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] RegistrationDataForm dataForm)
     {
+        
         ApplicationUser user = await _userManager.FindByEmailAsync(dataForm.Email);
         if (user != null)
         {
+            
             var result = _signInManager.PasswordSignInAsync(user.UserName, dataForm.Password, false, false).Result;
             if (result.Succeeded)
             {
