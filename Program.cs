@@ -134,8 +134,13 @@ builder.Services.AddCors(options =>
 builder.Services.AddSignalR();
 
 var app = builder.Build();
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
 app.UseRouting();
 app.UseCors(MyAllowSpecificOrigins);
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -148,8 +153,7 @@ if (app.Environment.IsDevelopment())
 }
 
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
+
 
 
 
