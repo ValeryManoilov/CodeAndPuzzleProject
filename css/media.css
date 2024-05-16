@@ -1,0 +1,40 @@
+
+@media(max-width: 600px){
+    .info{
+        display: flex;
+        flex-direction: column;
+       
+    }
+    .data{
+        margin: 0 auto;
+        width: 85%;
+        margin-top: 15px;
+        padding: 25px 5px 47px 5px;
+    }
+    .photo{
+        margin: 0 auto;
+    }
+    input{
+        padding-left: 0px;
+        height: 20px;
+       
+}
+#save{
+   position: relative;
+   margin: 0 auto;
+   margin-top: 15px;
+ }
+ .knopki{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px 10px;
+    margin-top: 50px;
+}
+#izbr{
+    padding: 15px 30px;
+}
+label{
+    font-size: 14px;
+}
+}

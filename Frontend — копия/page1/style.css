@@ -307,3 +307,13 @@ footer{
     justify-content: space-between;
     align-items: center;
 }
+
+@media (max-width: 600px){
+.content-section-1__container{
+    display: block;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: start;
+    width: 1092px;
+    height: 413px;
+}}

@@ -4,7 +4,7 @@ body{
 
 header{
     font-family: "Inter";
-    width: 100%;
+    max-width: 1920px;
     height: 120px;
     background-color: #084887;
     display: flex;
@@ -14,8 +14,6 @@ header{
 }
 
 .content-header__container{
-    width: 1079px;
-    height: 60px;
     display: flex;
     flex-direction: row;
     /* justify-content: space-between; */
@@ -23,8 +21,6 @@ header{
 }
 
 .header-logo__container{
-    width: 104px;
-    height: 55px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -87,10 +83,10 @@ footer{
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    max-width: 1920px;
 }
 
 .content-footer__container{
-    width: 1113px;
     height: 80px;
     display: flex;
     flex-direction: row;
@@ -129,7 +125,7 @@ footer{
 }
 
 .footer-images__container{
-    width: 243px;
+   
     height: 80px;
     display: flex;
     flex-direction: row;

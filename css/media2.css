@@ -1,0 +1,47 @@
+
+@media(max-width: 600px){
+.footer__text{
+        display: none;
+    }
+    .tegs{
+        display: flex;
+        flex-direction: column;
+    }
+    .rating-group{
+        display: flex;
+        justify-content: space-between;
+        
+    }
+    iframe {
+        width: 100%;
+        border-radius: 50px;
+        height: 200px;
+    }
+    .most{
+        background-image: url(../img/most.png);
+      
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size:cover ;
+        height:  150px;
+        
+    }
+    
+header{
+    height: 80px;
+    font-size: 14px;
+    
+}
+.header-nav__container{
+    height: 19px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 250px;
+}
+.header-nav__container{
+    gap: 2px;
+}
+
+}
