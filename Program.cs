@@ -131,15 +131,7 @@ builder.Services.AddSingleton<IUserValidatorService>(provider =>
     return userValidatorService;
 });
 
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name : MyAllowSpecificOrigins,
-            builder => 
-            {
-                builder.WithOrigins("http://localhost:5083");
-            });
-});
+
 
 
 builder.Services.AddSignalR();
