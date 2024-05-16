@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "71BQIkoAjHRvxLe249pjmt5k3iDzXZ/+TgKcUO0/KTn4dO6Dx7y4sJLf4yRQhykysDzjfQFjE8QXelQeVHI/JQ==",
+  "dgSpecHash": "wC7Om7UY43bsCeiUcs2nua3Lpn/jEOd1G2/NcJaepFKGw4fjwEOC+e6dmKsmzy/4jM+wvXnFHYqDPNxh9JR6VQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Evgen\\Desktop\\CodeAndPuzzleProject1\\CodeAndPuzzleProject\\CodeAndPuzzleProject.csproj",
+  "projectFilePath": "C:\\Users\\Evgen\\Desktop\\CodeAndPuzzleProject3\\CodeAndPuzzleProject\\CodeAndPuzzleProject.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Evgen\\.nuget\\packages\\microsoft.aspnetcore\\2.2.0\\microsoft.aspnetcore.2.2.0.nupkg.sha512",
     "C:\\Users\\Evgen\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
