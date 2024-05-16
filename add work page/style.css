@@ -37,6 +37,10 @@ nav {
     margin: auto;
 }
 
+#block_first_mobile {
+    display: none;
+}
+
 #block_second_div {
     margin-top: 135px;
     display: flex;
@@ -143,3 +147,98 @@ input[type=text] {
     background-color: #084887;
     color: #ffffff;
 }
+/* 
+@media (min-width:320px) and (max-width:480px) {
+    nav {
+        height: 60px;
+        background-color: #084887;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    #menu_logo {
+        padding-left: 80px;
+        width: 70px;
+        height: 28px;
+    }
+    
+    #menu {
+        color: white;
+        font-family: "Inter", sans-serif;
+        font-weight: 500;
+        font-style: normal;
+        font-size: 20px;
+        padding-right: 80px;
+    }
+
+    #all_div {
+        margin: 0;
+        width: 300px;
+    }
+
+    #block_first_div {
+        margin-left: 10px;
+        margin-top: 30px;
+        width: 300px;
+    }
+    
+    #block_first_pc {
+        display: none;
+    }
+
+    #block_first_mobile {
+        display: block;
+    }
+
+    #block_second_div {
+        margin-top: 0;
+        flex-direction: column;
+    }
+
+    #p_1 {
+        position: absolute;
+        top: 110px;
+        left: 40px;
+    }
+
+    #p_2 {
+        position: absolute;
+        top: 190px;
+        left: 40px;
+        margin-left:0px;
+    }
+    
+    #p_3 {
+        position: absolute;
+        top: 300px;
+        left: 40px;
+        margin-left:0px;
+    }
+    
+    #p_4 {
+        position: absolute;
+        top: 410px;
+        left: 40px;
+        margin-left:0px;
+    }
+    
+    #p_5 {
+        position: absolute;
+        top: 530px;
+        left: 40px;
+        margin-left:0px;
+    }
+}
+
+@media (max-width:640px) {
+ /*480px
+}
+
+@media (max-width:960px) {
+640px
+}
+
+@media (max-width:1200px) {
+960px
+} 
