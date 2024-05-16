@@ -12,6 +12,17 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options => 
+{ 
+    options.AddDefaultPolicy(builder => 
+    { 
+        builder.WithOrigins("http://localhost:5083") // Замените на ваш домен 
+              .AllowAnyHeader() 
+              .AllowAnyMethod() 
+              .AllowCredentials(); 
+    }); 
+});
+
 // Add services to the container.
 
 builder.Services.AddScoped<TokenService>();
@@ -115,21 +126,18 @@ builder.Services.AddScoped<ILessonService>(provider =>
     ILessonService lessonService = new LessonService(lessonRepository);
     return lessonService;
 });
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+// var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
-builder.Services.AddCors(options => {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-    builder => {
-        builder.WithOrigins("http://localhost:5083");
-    });
-});
+// builder.Services.AddCors(options => {
+//     options.AddPolicy(name: MyAllowSpecificOrigins,
+//     builder => {
+//         builder.WithOrigins("http://localhost:5083");
+//     });
+// });
 
 builder.Services.AddSignalR();
 
 var app = builder.Build();
-app.UseRouting();
-app.UseCors(MyAllowSpecificOrigins);
-
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -140,13 +148,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAuthorization();
 
-
-
+app.UseCors();
 
 app.MapControllers();
 app.Run();
