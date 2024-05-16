@@ -41,39 +41,43 @@ public class UserController : ControllerBase
             return BadRequest("Почта или пароль введены неверно");
         };
         
-        var user = new ApplicationUser
+        var checkUser = await _userManager.FindByEmailAsync(dataForm.Email);
+        if (checkUser == null)
         {
-            UserName = $"{Guid.NewGuid()}_default",
-            FirstName = "default",
-            LastName = "default",
-            AvatarPath = "Content/Avatars/default.png",
-            Email = dataForm.Email
-        };
-
-        var result = await _userManager.CreateAsync(user, dataForm.Password);
-
-        if (result.Succeeded)
-        {
-
-            await _userManager.AddToRoleAsync(user, "Member");
-            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            var confirmationLink = Url.Action("ConfirmEmail", "User", new { userId = user.Id, token}, Request.Scheme);
-            try
+            var user = new ApplicationUser
             {
-                await _emailService.SendEmailAsync(user.Email, "Подтверждение почты", confirmationLink, false);
-            }
-            catch (Exception ex)
+                UserName = $"{Guid.NewGuid()}_default",
+                FirstName = "default",
+                LastName = "default",
+                AvatarPath = "Content/Avatars/default.png",
+                Email = dataForm.Email
+            };
+
+            var result = await _userManager.CreateAsync(user, dataForm.Password);
+
+            if (result.Succeeded)
             {
-                _userManager.DeleteAsync(user);
-                return BadRequest("Что-то пошло не так. Повтороите попытку");
+                await _userManager.AddToRoleAsync(user, "Member");
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var confirmationLink = Url.Action("ConfirmEmail", "User", new { userId = user.Id, token}, Request.Scheme);
+                try
+                {
+                    await _emailService.SendEmailAsync(user.Email, "Подтверждение почты", confirmationLink, false);
+                }
+                catch (Exception ex)
+                {
+                    _userManager.DeleteAsync(user);
+                    return BadRequest("Что-то пошло не так. Повтороите попытку");
+                }
+                return Ok();
             }
-            return Ok();
+            else
+            {
+                Console.WriteLine(result);
+                return BadRequest();
+            }
         }
-        else
-        {
-            Console.WriteLine(result);
-            return BadRequest();
-        }
+        return BadRequest("Пользователь существует");
     }
 
     [HttpGet]

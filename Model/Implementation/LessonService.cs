@@ -31,16 +31,16 @@ public class LessonService : ILessonService
         await _lessonRepository.DeleteFavourite(userId, lessonId);
     }
 
-    public List<GetLessonsResponseData> GetLessonsNonAuthUser(List<string> tags)
+    public async Task<List<GetLessonsResponseData>> GetLessonsNonAuthUser(List<string> tags)
     {
-        return _lessonRepository.GetLessonsNonAuthUser(tags);
+        return await _lessonRepository.GetLessonsNonAuthUser(tags);
     }
-    public List<GetLessonsResponseData> GetLessonsAuthUser(int userId, List<string> tags)
+    public async Task<List<GetLessonsResponseData>> GetLessonsAuthUser(int userId, List<string> tags)
     {
-        return _lessonRepository.GetLessonsAuthUser(userId, tags);
+        return await _lessonRepository.GetLessonsAuthUser(userId, tags);
     }
-    public GetLessonResponseData GetLesson(int lessonId)
+    public async Task<GetLessonResponseData> GetLesson(int lessonId)
     {
-        return _lessonRepository.GetLesson(lessonId);
+        return await _lessonRepository.GetLesson(lessonId);
     }
 }

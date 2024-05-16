@@ -79,3 +79,4 @@ C:\Users\Sanjar\Desktop\CodeAndPuzzleProject\obj\Debug\net8.0\refint\CodeAndPuzz
 C:\Users\Sanjar\Desktop\CodeAndPuzzleProject\obj\Debug\net8.0\CodeAndPuzzleProject.pdb
 C:\Users\Sanjar\Desktop\CodeAndPuzzleProject\obj\Debug\net8.0\CodeAndPuzzleProject.genruntimeconfig.cache
 C:\Users\Sanjar\Desktop\CodeAndPuzzleProject\obj\Debug\net8.0\ref\CodeAndPuzzleProject.dll
+C:\Users\Sanjar\Desktop\CodeAndPuzzleProject\bin\Debug\net8.0\CodeAndPuzzleProject.staticwebassets.runtime.json
