@@ -27,30 +27,66 @@ public class LessonController : ControllerBase
     [HttpPost("add")]
     public async Task<IActionResult> Add([FromForm] LessonDataForm dataForm)
     {
-        await _lessonService.Add(dataForm);
-        return Ok();
+        string authHeader = Request.Headers["Authorization"];
+        string token = authHeader.Substring("Bearer ".Length).Trim();
+        var principal = _tokenService.ValidateToken(token);
+        if (principal == null)
+        {
+            return BadRequest("Не авторизован");
+        }
+        var email = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
+        if (_userManager.FindByEmailAsync(email) != null)
+        {
+            await _lessonService.Add(dataForm);
+            return Ok();
+        }
+        return BadRequest("Не авторизован");
     }
 
     [Authorize(Roles = "Manager")]
     [HttpDelete("delete")]
     public IActionResult Delete(int lessonId)
     {
-        _lessonService.Delete(lessonId);
-        return Ok();
+        string authHeader = Request.Headers["Authorization"];
+        string token = authHeader.Substring("Bearer ".Length).Trim();
+        var principal = _tokenService.ValidateToken(token);
+        if (principal == null)
+        {
+            return BadRequest("Не авторизован");
+        }
+        var email = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
+        if (_userManager.FindByEmailAsync(email) != null)
+        {
+            _lessonService.Delete(lessonId);
+            return Ok();
+        }
+        return BadRequest("Не авторизован");
     }
 
 
     [Authorize(Roles = "Manager")]
     [HttpPut("edit")]
-    public IActionResult Edit([FromForm] LessonDataForm lessonDataForm)
+    public async Task<IActionResult> Edit([FromForm] LessonDataForm lessonDataForm)
     {
-        _lessonService.Edit(lessonDataForm);
-        return Ok();
+        string authHeader = Request.Headers["Authorization"];
+        string token = authHeader.Substring("Bearer ".Length).Trim();
+        var principal = _tokenService.ValidateToken(token);
+        if (principal == null)
+        {
+            return BadRequest("Не авторизован");
+        }
+        var email = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
+        if (_userManager.FindByEmailAsync(email) != null)
+        {
+            await _lessonService.Edit(lessonDataForm);
+            return Ok();
+        }
+        return BadRequest("Не авторизован");
     }
 
     [Authorize]
     [HttpGet("mark/{lessonId}/{mark}")]
-    public IActionResult Authorize(int lessonId, int mark)
+    public async Task<IActionResult> Authorize(int lessonId, int mark)
     {
         if (mark > 10)
         {
@@ -59,11 +95,15 @@ public class LessonController : ControllerBase
         string authHeader = Request.Headers["Authorization"];
         string token = authHeader.Substring("Bearer ".Length).Trim();
         var principal = _tokenService.ValidateToken(token);
+        if (principal == null)
+        {
+            return BadRequest("Не авторизован");
+        }
         var email = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
         var user = _userManager.FindByEmailAsync(email);
         if (user != null)
         {
-            _lessonService.Mark(user.Id, lessonId, mark);
+            await _lessonService.Mark(user.Id, lessonId, mark);
             return Ok();
         }
         return BadRequest();
@@ -71,61 +111,73 @@ public class LessonController : ControllerBase
 
     [Authorize]
     [HttpGet("addfavourite")]
-    public IActionResult AddFavourite(int lessonId)
+    public async Task<IActionResult> AddFavourite(int lessonId)
     {
         string authHeader = Request.Headers["Authorization"];
         string token = authHeader.Substring("Bearer ".Length).Trim();
         var principal = _tokenService.ValidateToken(token);
+        if (principal == null)
+        {
+            return BadRequest("Не авторизован");
+        }
         var email = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
         var user = _userManager.FindByEmailAsync(email);
         if (user != null)
         {
-            _lessonService.AddFavourite(user.Id, lessonId);
+            await _lessonService.AddFavourite(user.Id, lessonId);
             return Ok();
         }
         return BadRequest();
     }
     [Authorize]
     [HttpGet("deletefavourite")]
-    public IActionResult DeleteFavourite(int lessonId)
+    public async Task<IActionResult> DeleteFavourite(int lessonId)
     {
         string authHeader = Request.Headers["Authorization"];
         string token = authHeader.Substring("Bearer ".Length).Trim();
         var principal = _tokenService.ValidateToken(token);
+        if (principal == null)
+        {
+            return BadRequest("Не авторизован");
+        }
         var email = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
         var user = _userManager.FindByEmailAsync(email);
         if (user != null)
         {
-            _lessonService.AddFavourite(user.Id, lessonId);
+            await _lessonService.AddFavourite(user.Id, lessonId);
             return Ok();
         }
         return BadRequest();
     }
 
     [HttpPost("getlessonsnonauthuser")]
-    public IActionResult GetLessonsNonAuthUser(List<string> tags)
+    public async Task<IActionResult> GetLessonsNonAuthUser(List<string> tags)
     {
-        return Ok(_lessonService.GetLessonsNonAuthUser(tags));
+        return Ok(await _lessonService.GetLessonsNonAuthUser(tags));
     }
     [HttpPost("getlessonsauthuser")]
-    public IActionResult GetLessonsAuthUser(List<string> tags)
+    public async Task<IActionResult> GetLessonsAuthUser(List<string> tags)
     {
         string authHeader = Request.Headers["Authorization"];
         string token = authHeader.Substring("Bearer ".Length).Trim();
         var principal = _tokenService.ValidateToken(token);
+        if (principal == null)
+        {
+            return BadRequest("Не авторизован");
+        }
         var email = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
         var user = _userManager.FindByEmailAsync(email);
         if (user != null)
         {
-            return Ok(_lessonService.GetLessonsAuthUser(user.Id, tags));
+            return Ok(await _lessonService.GetLessonsAuthUser(user.Id, tags));
         }
         return BadRequest("Не авторизован");
     }
     
     [HttpGet("getlesson/{lessonId}")]
-    public IActionResult GetLesson(int lessonId)
+    public async Task<IActionResult> GetLesson(int lessonId)
     {
-        var lesson = _lessonService.GetLesson(lessonId);
+        var lesson = await _lessonService.GetLesson(lessonId);
         if (lesson != null)
         {
             return Ok(lesson);

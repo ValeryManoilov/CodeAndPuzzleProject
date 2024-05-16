@@ -1,32 +1,8 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\Sanjar\\Desktop\\CodeAndPuzzleProject\\wwwroot\\Avatars\\d9a96119-f757-435c-9597-915dd56d1c27_Снимок экрана 2024-02-26 002841.png",
-      "PackagePath": "staticwebassets\\Avatars\\d9a96119-f757-435c-9597-915dd56d1c27_Снимок экрана 2024-02-26 002841.png"
-    },
-    {
       "Id": "C:\\Users\\Sanjar\\Desktop\\CodeAndPuzzleProject\\wwwroot\\Avatars\\default.png",
       "PackagePath": "staticwebassets\\Avatars\\default.png"
-    },
-    {
-      "Id": "C:\\Users\\Sanjar\\Desktop\\CodeAndPuzzleProject\\wwwroot\\LessonPhotos\\9c593f39-ca8b-4228-8849-69307cfde01b_Снимок экрана 2024-02-26 002841.png",
-      "PackagePath": "staticwebassets\\LessonPhotos\\9c593f39-ca8b-4228-8849-69307cfde01b_Снимок экрана 2024-02-26 002841.png"
-    },
-    {
-      "Id": "C:\\Users\\Sanjar\\Desktop\\CodeAndPuzzleProject\\wwwroot\\LessonPhotos\\c32eef62-d585-484b-bdf8-3edd30a2da19_Снимок экрана 2024-02-19 164453.png",
-      "PackagePath": "staticwebassets\\LessonPhotos\\c32eef62-d585-484b-bdf8-3edd30a2da19_Снимок экрана 2024-02-19 164453.png"
-    },
-    {
-      "Id": "C:\\Users\\Sanjar\\Desktop\\CodeAndPuzzleProject\\wwwroot\\LessonPhotos\\d2fdfdf1-44ff-4676-9268-e77ba6c58fff_Снимок экрана 2024-02-26 161405.png",
-      "PackagePath": "staticwebassets\\LessonPhotos\\d2fdfdf1-44ff-4676-9268-e77ba6c58fff_Снимок экрана 2024-02-26 161405.png"
-    },
-    {
-      "Id": "C:\\Users\\Sanjar\\Desktop\\CodeAndPuzzleProject\\wwwroot\\LessonPresentations\\45b42081-c0d9-4bbc-829a-a779cb66e86a_Урок 103 ДЗ.pdf",
-      "PackagePath": "staticwebassets\\LessonPresentations\\45b42081-c0d9-4bbc-829a-a779cb66e86a_Урок 103 ДЗ.pdf"
-    },
-    {
-      "Id": "C:\\Users\\Sanjar\\Desktop\\CodeAndPuzzleProject\\wwwroot\\LessonVideos\\756226b4-3145-42e3-968e-ecde70289c04_video_2024-05-14_03-28-12.mp4",
-      "PackagePath": "staticwebassets\\LessonVideos\\756226b4-3145-42e3-968e-ecde70289c04_video_2024-05-14_03-28-12.mp4"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.CodeAndPuzzleProject.Microsoft.AspNetCore.StaticWebAssets.props",

@@ -190,7 +190,7 @@ public class LessonRepository : ILessonRepository
             _lessonContext.LessonVideos.RemoveRange(videosToDelete);
             _lessonContext.LessonPresentations.RemoveRange(presentationToDelete);
 
-            string text = dataForm.LessonText;
+        string text = dataForm.LessonText;
         LessonText lessonText = new LessonText{LessonId = lesson.Id, Text = text};
         
         List<LessonLink> lessonLinks = new List<LessonLink>();
@@ -251,23 +251,30 @@ public class LessonRepository : ILessonRepository
         _lessonContext.LessonTexts.Add(lessonText);
         if (lessonLinks != null)
         {
-            await _lessonContext.LessonLinks.AddRangeAsync(lessonLinks);
+            _lessonContext.LessonLinks.AddRange(lessonLinks);
         }
         if (lessonPhotos != null)
         {
-            await _lessonContext.LessonPhotos.AddRangeAsync(lessonPhotos);
+            _lessonContext.LessonPhotos.AddRange(lessonPhotos);
         }
         if (lessonVideos != null)
         {
-            await _lessonContext.LessonVideos.AddRangeAsync(lessonVideos);
+            _lessonContext.LessonVideos.AddRange(lessonVideos);
         }
         if (lessonPresentations != null)
         {
-            await _lessonContext.LessonPresentations.AddRangeAsync(lessonPresentations);
+            _lessonContext.LessonPresentations.AddRange(lessonPresentations);
         }
-        await _lessonContext.LessonTags.AddRangeAsync(lessonTags);
+        _lessonContext.LessonTags.AddRange(lessonTags);
 
-            await _lessonContext.SaveChangesAsync();
+        _lessonContext.LessonRatings.Add(new LessonRating
+        {
+            LessonId = lesson.Id,
+            MarkCount = 0,
+            Rating = 0
+            });
+
+        await _lessonContext.SaveChangesAsync();
         }
     }
 
