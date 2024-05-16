@@ -4455,11 +4455,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\admin\\Новая папка\\CodeAndPuzzleProject-2\\CodeAndPuzzleProject.csproj",
+      "projectUniqueName": "C:\\Users\\admin\\Новая папка\\CodeAndPuzzleProject\\CodeAndPuzzleProject.csproj",
       "projectName": "CodeAndPuzzleProject",
-      "projectPath": "C:\\Users\\admin\\Новая папка\\CodeAndPuzzleProject-2\\CodeAndPuzzleProject.csproj",
+      "projectPath": "C:\\Users\\admin\\Новая папка\\CodeAndPuzzleProject\\CodeAndPuzzleProject.csproj",
       "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\admin\\Новая папка\\CodeAndPuzzleProject-2\\obj\\",
+      "outputPath": "C:\\Users\\admin\\Новая папка\\CodeAndPuzzleProject\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config"

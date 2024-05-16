@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1tXAK8Nbt88=",
+  "dgSpecHash": "KYMdko5RuZ8=",
   "success": true,
-  "projectFilePath": "C:\\Users\\admin\\Новая папка\\CodeAndPuzzleProject-2\\CodeAndPuzzleProject.csproj",
+  "projectFilePath": "C:\\Users\\admin\\Новая папка\\CodeAndPuzzleProject\\CodeAndPuzzleProject.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\admin\\.nuget\\packages\\microsoft.aspnetcore\\2.2.0\\microsoft.aspnetcore.2.2.0.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",

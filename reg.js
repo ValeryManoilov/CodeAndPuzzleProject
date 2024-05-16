@@ -1,3 +1,5 @@
+
+
 const password = document.getElementById("password");
 const confirmPassword = document.getElementById("passwordpovtor");
 const username = document.getElementById("email");
@@ -12,13 +14,15 @@ button.addEventListener('click', () => {
         return;
     }
 
-    const formData = new FormData();
-    formData.append('username', username.value);
-    formData.append('password', password.value);
-
-    fetch('http://localhost:5083/api/user/adduser', {
+    fetch('http://localhost:5083/swagger/api/user/register', {
         method: 'POST',
-        body: formData
+        body: JSON.stringify({
+            email: username.value,
+            password: password.value
+        }),
+        headers: {
+            'Content-type': 'application/json',
+        }
     }).then(response => {
         if (response.status === 200) {
             localStorage.setItem('isLoggedIn', 'true');
@@ -33,10 +37,11 @@ button.addEventListener('click', () => {
     });
 });
 
+
 // const password = document.getElementById("password");
 // const confirmPassword = document.getElementById("passwordpovtor");
 // const username = document.getElementById("email");
-// const button = document.getElementById("vxod");
+// const button = document.getElementById("zaregistr");
 
 // button.addEventListener('click', () => {
 //     if (password.value !== confirmPassword.value) {
@@ -47,15 +52,13 @@ button.addEventListener('click', () => {
 //         return;
 //     }
 
-//     fetch('http://localhost:5083//swagger/api/user/adduser', {
+//     const formData = new FormData();
+//     formData.append('username', username.value);
+//     formData.append('password', password.value);
+
+//     fetch('http://localhost:5083/api/user/adduser', {
 //         method: 'POST',
-//         body: JSON.stringify({
-//             username: username.value,
-//             password: password.value
-//         }),
-//         headers: {
-//             'Content-type': 'application/json',
-//         }
+//         body: formData
 //     }).then(response => {
 //         if (response.status === 200) {
 //             localStorage.setItem('isLoggedIn', 'true');

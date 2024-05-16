@@ -145,3 +145,8 @@ box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.39);
 #izbr{
     padding: 15px 90px;
 }
+
+@media (max-width: 600px) {
+    
+    
+}
