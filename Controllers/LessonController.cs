@@ -8,7 +8,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
 [ApiController]
-[Route("api/lessons/")]
+[Route("api/lessons")]
 public class LessonController : ControllerBase
 {
     private readonly UserManager<ApplicationUser> _userManager;
@@ -25,9 +25,9 @@ public class LessonController : ControllerBase
 
     [Authorize(Roles = "Manager")]
     [HttpPost("add")]
-    public IActionResult Add([FromForm] LessonDataForm dataForm)
+    public async Task<IActionResult> Add([FromForm] LessonDataForm dataForm)
     {
-        _lessonService.Add(dataForm);
+        await _lessonService.Add(dataForm);
         return Ok();
     }
 
@@ -52,9 +52,14 @@ public class LessonController : ControllerBase
     [HttpGet("mark/{lessonId}/{mark}")]
     public IActionResult Authorize(int lessonId, int mark)
     {
+        if (mark > 10)
+        {
+            return NotFound();
+        }
         string authHeader = Request.Headers["Authorization"];
         string token = authHeader.Substring("Bearer ".Length).Trim();
         var principal = _tokenService.ValidateToken(token);
+        
         var email = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
         var user = _userManager.FindByEmailAsync(email);
         if (user != null)
@@ -98,13 +103,13 @@ public class LessonController : ControllerBase
         return BadRequest();
     }
 
-    [HttpGet("getlessonsnonauthuser")]
-    public IActionResult GetLessonsNonAuthUser()
+    [HttpPost("getlessonsnonauthuser")]
+    public IActionResult GetLessonsNonAuthUser(List<string> tags)
     {
-        return Ok(_lessonService.GetLessonsNonAuthUser());
+        return Ok(_lessonService.GetLessonsNonAuthUser(tags));
     }
-    [HttpGet("getlessonsauthuser")]
-    public IActionResult GetLessonsAuthUser()
+    [HttpPost("getlessonsauthuser")]
+    public IActionResult GetLessonsAuthUser(List<string> tags)
     {
         string authHeader = Request.Headers["Authorization"];
         string token = authHeader.Substring("Bearer ".Length).Trim();
@@ -113,7 +118,7 @@ public class LessonController : ControllerBase
         var user = _userManager.FindByEmailAsync(email);
         if (user != null)
         {
-            return Ok(_lessonService.GetLessonsAuthUser(user.Id));
+            return Ok(_lessonService.GetLessonsAuthUser(user.Id, tags));
         }
         return BadRequest("Не авторизован");
     }
@@ -121,10 +126,12 @@ public class LessonController : ControllerBase
     [HttpGet("getlesson/{lessonId}")]
     public IActionResult GetLesson(int lessonId)
     {
-        return Ok(_lessonService.GetLesson(lessonId));
+        var lesson = _lessonService.GetLesson(lessonId);
+        if (lesson != null)
+        {
+            return Ok(lesson);
+        }
+        return NotFound();
     }
-
-
-
 
 }
