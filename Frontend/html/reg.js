@@ -18,12 +18,12 @@ button.addEventListener('click', () => {
     console.log(username.value)
     console.log(password.value)
 
-    fetch(`http://localhost:5083/api/user/register?email=${username.value}&password=${password.value}`, {
+    fetch(`http://localhost:5083/api/user/register`, {
         method: 'POST',
-        // body: JSON.stringify({
-        //     Email: username.value,
-        //     Password: password.value
-        // }),
+        body: JSON.stringify({
+            Email: username.value,
+            Password: password.value
+        }),
         headers: {
             'Access-Control-Allow-Origin': "*",
             "Content-Type": "application/json",

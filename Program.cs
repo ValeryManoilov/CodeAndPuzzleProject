@@ -16,7 +16,7 @@ builder.Services.AddCors(options =>
 { 
     options.AddDefaultPolicy(builder => 
     { 
-        builder.WithOrigins("http://localhost:5083") // Замените на ваш домен 
+        builder.WithOrigins("http://127.0.0.1:5500") // Замените на ваш домен 
               .AllowAnyHeader() 
               .AllowAnyMethod() 
               .AllowCredentials(); 
