@@ -115,11 +115,20 @@ builder.Services.AddScoped<ILessonService>(provider =>
     ILessonService lessonService = new LessonService(lessonRepository);
     return lessonService;
 });
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
+builder.Services.AddCors(options => {
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+    builder => {
+        builder.WithOrigins("http://localhost:5083");
+    });
+});
 
 builder.Services.AddSignalR();
 
 var app = builder.Build();
+app.UseRouting();
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthentication();
 app.UseAuthorization();

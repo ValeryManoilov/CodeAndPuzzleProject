@@ -31,6 +31,7 @@ public class UserController : ControllerBase
 
     [HttpPost("register")]
     public async Task<IActionResult> CreateUser([FromBody] RegistrationDataForm dataForm)
+
     {
         var user = new ApplicationUser
         {
@@ -40,6 +41,8 @@ public class UserController : ControllerBase
             AvatarPath = "Content/Avatars/default.png",
             Email = dataForm.Email
         };
+        Console.WriteLine(dataForm.Email);
+        Console.WriteLine("Идет регистрация");
 
         var result = await _userManager.CreateAsync(user, dataForm.Password);
 

@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Sanjar\\Desktop\\CodeAndPuzzleProject\\CodeAndPuzzleProject.csproj": {}
+    "C:\\Users\\Evgen\\Desktop\\CodeAndPuzzleProject1\\CodeAndPuzzleProject\\CodeAndPuzzleProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Sanjar\\Desktop\\CodeAndPuzzleProject\\CodeAndPuzzleProject.csproj": {
+    "C:\\Users\\Evgen\\Desktop\\CodeAndPuzzleProject1\\CodeAndPuzzleProject\\CodeAndPuzzleProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Sanjar\\Desktop\\CodeAndPuzzleProject\\CodeAndPuzzleProject.csproj",
+        "projectUniqueName": "C:\\Users\\Evgen\\Desktop\\CodeAndPuzzleProject1\\CodeAndPuzzleProject\\CodeAndPuzzleProject.csproj",
         "projectName": "CodeAndPuzzleProject",
-        "projectPath": "C:\\Users\\Sanjar\\Desktop\\CodeAndPuzzleProject\\CodeAndPuzzleProject.csproj",
-        "packagesPath": "C:\\Users\\Sanjar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Sanjar\\Desktop\\CodeAndPuzzleProject\\obj\\",
+        "projectPath": "C:\\Users\\Evgen\\Desktop\\CodeAndPuzzleProject1\\CodeAndPuzzleProject\\CodeAndPuzzleProject.csproj",
+        "packagesPath": "C:\\Users\\Evgen\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Evgen\\Desktop\\CodeAndPuzzleProject1\\CodeAndPuzzleProject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Sanjar\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Evgen\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -47,6 +45,10 @@
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[8.0.4, )"
+            },
+            "Microsoft.AspNetCore.Cors": {
+              "target": "Package",
+              "version": "[2.2.0, )"
             },
             "Microsoft.AspNetCore.Identity": {
               "target": "Package",

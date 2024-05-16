@@ -1,17 +1,15 @@
-
-
 using System.ComponentModel.DataAnnotations;
 
 public class UpdateUserDataForm
 {
-    [Required]
+    // [Required]
     public string FirstName { get; set; }
-    [Required]
+    // [Required]
     public string LastName { get; set;}
-    [Required]
+    // [Required]
     public string Email { get; set; }
-    [Required]
+    // [Required]
     public string UserName { get; set; }
-    [Required]
+    // [Required]
     public IFormFile? Avatar { get; set; }
 }
