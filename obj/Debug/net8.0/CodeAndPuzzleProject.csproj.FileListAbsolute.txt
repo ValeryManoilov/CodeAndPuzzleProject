@@ -79,6 +79,7 @@ C:\Users\Sanjar\Desktop\CodeAndPuzzleProject\obj\Debug\net8.0\refint\CodeAndPuzz
 C:\Users\Sanjar\Desktop\CodeAndPuzzleProject\obj\Debug\net8.0\CodeAndPuzzleProject.pdb
 C:\Users\Sanjar\Desktop\CodeAndPuzzleProject\obj\Debug\net8.0\CodeAndPuzzleProject.genruntimeconfig.cache
 C:\Users\Sanjar\Desktop\CodeAndPuzzleProject\obj\Debug\net8.0\ref\CodeAndPuzzleProject.dll
+<<<<<<< HEAD
 C:\Users\admin\Новая папка\CodeAndPuzzleProject\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\admin\Новая папка\CodeAndPuzzleProject\bin\Debug\net8.0\appsettings.json
 C:\Users\admin\Новая папка\CodeAndPuzzleProject\bin\Debug\net8.0\CodeAndPuzzleProject.exe
@@ -160,3 +161,6 @@ C:\Users\admin\Новая папка\CodeAndPuzzleProject\obj\Debug\net8.0\refin
 C:\Users\admin\Новая папка\CodeAndPuzzleProject\obj\Debug\net8.0\CodeAndPuzzleProject.pdb
 C:\Users\admin\Новая папка\CodeAndPuzzleProject\obj\Debug\net8.0\CodeAndPuzzleProject.genruntimeconfig.cache
 C:\Users\admin\Новая папка\CodeAndPuzzleProject\obj\Debug\net8.0\ref\CodeAndPuzzleProject.dll
+=======
+C:\Users\Sanjar\Desktop\CodeAndPuzzleProject\bin\Debug\net8.0\CodeAndPuzzleProject.staticwebassets.runtime.json
+>>>>>>> dev_Satlykov_Sanjar

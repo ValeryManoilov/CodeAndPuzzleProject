@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using Microsoft.EntityFrameworkCore;
 
 public class LessonRepository : ILessonRepository
 {
@@ -36,7 +37,7 @@ public class LessonRepository : ILessonRepository
             foreach (var photo in dataForm.Photos)
             {
                 string filePath = $"{Guid.NewGuid()}_{photo.FileName}";
-                filePath = $"Content/LessonPhotos/{filePath}";
+                filePath = $"wwwroot/LessonPhotos/{filePath}";
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await photo.CopyToAsync(fileStream);
@@ -50,7 +51,7 @@ public class LessonRepository : ILessonRepository
             foreach (var video in dataForm.Videos)
             {
                 string filePath = $"{Guid.NewGuid()}_{video.FileName}";
-                filePath = $"Content/LessonVideos/{filePath}";
+                filePath = $"wwwroot/LessonVideos/{filePath}";
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await video.CopyToAsync(fileStream);
@@ -64,7 +65,7 @@ public class LessonRepository : ILessonRepository
             foreach (var presentation in dataForm.Presentations)
             {
                 string filePath = $"{Guid.NewGuid()}_{presentation.FileName}";
-                filePath = $"Content/LessonPresentations/{filePath}";
+                filePath = $"wwwroot/LessonPresentations/{filePath}";
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await presentation.CopyToAsync(fileStream);
@@ -208,7 +209,7 @@ public class LessonRepository : ILessonRepository
             foreach (var photo in dataForm.Photos)
             {
                 string filePath = $"{Guid.NewGuid()}_{photo.FileName}";
-                filePath = $"Content/LessonPhotos/{filePath}";
+                filePath = $"wwwroot/LessonPhotos/{filePath}";
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await photo.CopyToAsync(fileStream);
@@ -222,7 +223,7 @@ public class LessonRepository : ILessonRepository
             foreach (var video in dataForm.Videos)
             {
                 string filePath = $"{Guid.NewGuid()}_{video.FileName}";
-                filePath = $"Content/LessonVideos/{filePath}";
+                filePath = $"wwwroot/LessonVideos/{filePath}";
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await video.CopyToAsync(fileStream);
@@ -236,7 +237,7 @@ public class LessonRepository : ILessonRepository
             foreach (var presentation in dataForm.Presentations)
             {
                 string filePath = $"{Guid.NewGuid()}_{presentation.FileName}";
-                filePath = $"Content/LessonPresentations/{filePath}";
+                filePath = $"wwwroot/LessonPresentations/{filePath}";
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await presentation.CopyToAsync(fileStream);
@@ -326,18 +327,18 @@ public class LessonRepository : ILessonRepository
         await _lessonContext.SaveChangesAsync();
     }
 
-    public List<GetLessonsResponseData> GetLessonsNonAuthUser(List<string> tags)
+    public async Task<List<GetLessonsResponseData>> GetLessonsNonAuthUser(List<string> tags)
     {
         List<ApplicationLesson> lessons = new List<ApplicationLesson>();
         if (tags.Count() == 0)
         {
-            lessons = _lessonContext.Lessons.ToList();
+            lessons = await _lessonContext.Lessons.ToListAsync();
         }
         else
         {
-            List<int> lessonIds = _lessonContext.LessonTags
-            .Where(t => tags.Contains(t.TagName)).Select(t => t.LessonId).ToList();
-            lessons = _lessonContext.Lessons.Where(l => lessonIds.Contains(l.Id)).ToList();
+            List<int> lessonIds = await _lessonContext.LessonTags
+            .Where(t => tags.Contains(t.TagName)).Select(t => t.LessonId).ToListAsync();
+            lessons = await _lessonContext.Lessons.Where(l => lessonIds.Contains(l.Id)).ToListAsync();
         }
 
         List<GetLessonsResponseData> responseData = lessons.Select(l => new GetLessonsResponseData
@@ -350,12 +351,12 @@ public class LessonRepository : ILessonRepository
             
             return responseData;
     }
-    public List<GetLessonsResponseData> GetLessonsAuthUser(int userId, List<string> tags)
+    public async Task<List<GetLessonsResponseData>> GetLessonsAuthUser(int userId, List<string> tags)
     {
         List<ApplicationLesson> lessons = new List<ApplicationLesson>();
         if (tags.Count() == 0)
         {
-            lessons = _lessonContext.Lessons.ToList();
+            lessons = await _lessonContext.Lessons.ToListAsync();
         }
         else
         {
@@ -377,22 +378,22 @@ public class LessonRepository : ILessonRepository
     }
 
 
-    public GetLessonResponseData GetLesson(int lessonId)
+    public async Task<GetLessonResponseData> GetLesson(int lessonId)
     {
         ApplicationLesson lesson = _lessonContext.Lessons.FirstOrDefault(l => l.Id == lessonId);
         if (lesson != null)
         {
             string text = _lessonContext.LessonTexts.FirstOrDefault(t => t.LessonId == lessonId).Text;
-            List<string> links = _lessonContext.LessonLinks.Where(l => l.LessonId == lessonId)
-            .Select(l => l.Link).ToList();
-            List<string> photoLinks = _lessonContext.LessonPhotos.Where(p => p.LessonId == lessonId)
-            .Select(p => p.Path).ToList();
-            List<string> videoLinks = _lessonContext.LessonVideos.Where(v => v.LessonId == lessonId)
-            .Select(v => v.Path).ToList();
-            List<string> presentationLinks = _lessonContext.LessonPresentations.Where(p => p.LessonId == lessonId)
-            .Select(p => p.Path).ToList();
-            List<string> tags = _lessonContext.LessonTags.Where(t => t.LessonId == lessonId)
-            .Select(t => t.TagName).ToList();
+            List<string> links = await _lessonContext.LessonLinks.Where(l => l.LessonId == lessonId)
+            .Select(l => l.Link).ToListAsync();
+            List<string> photoLinks = await _lessonContext.LessonPhotos.Where(p => p.LessonId == lessonId)
+            .Select(p => p.Path).ToListAsync();
+            List<string> videoLinks = await _lessonContext.LessonVideos.Where(v => v.LessonId == lessonId)
+            .Select(v => v.Path).ToListAsync();
+            List<string> presentationLinks = await _lessonContext.LessonPresentations.Where(p => p.LessonId == lessonId)
+            .Select(p => p.Path).ToListAsync();
+            List<string> tags = await _lessonContext.LessonTags.Where(t => t.LessonId == lessonId)
+            .Select(t => t.TagName).ToListAsync();
             
             var response = new GetLessonResponseData
             {
