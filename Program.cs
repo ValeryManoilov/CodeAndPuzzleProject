@@ -11,6 +11,17 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("http://127.0.0.1:5500")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
+    });
+});
+
 
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddAuthentication(options =>
@@ -139,7 +150,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseCors(MyAllowSpecificOrigins);
+
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -152,11 +163,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
-
-
-
-
-
 app.MapControllers();
+app.UseCors();
 app.Run();
