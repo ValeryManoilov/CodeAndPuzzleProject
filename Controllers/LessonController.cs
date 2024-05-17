@@ -130,7 +130,7 @@ public class LessonController : ControllerBase
         return BadRequest();
     }
     [Authorize]
-    [HttpGet("deletefavourite")]
+    [HttpDelete("deletefavourite")]
     public async Task<IActionResult> DeleteFavourite(int lessonId)
     {
         string authHeader = Request.Headers["Authorization"];
@@ -184,8 +184,5 @@ public class LessonController : ControllerBase
         }
         return NotFound();
     }
-
-
-
 
 }

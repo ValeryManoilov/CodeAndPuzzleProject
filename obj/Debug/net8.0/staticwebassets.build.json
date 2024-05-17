@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "FW7ORxnHZfBY8zmOS2/o9h/57Cr58d5M27GmjQM/2Ro=",
+  "Hash": "pr12O9HA1ICtVUBLAIhBRSMvB8F4ZHo4L37VR4ctpd4=",
   "Source": "CodeAndPuzzleProject",
   "BasePath": "_content/CodeAndPuzzleProject",
   "Mode": "Default",
@@ -17,12 +17,12 @@
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\Sanjar\\Desktop\\CodeAndPuzzleProject\\wwwroot\\Avatars\\default.png",
+      "Identity": "C:\\Users\\Sanjar\\Desktop\\CodeAndPuzzleProject\\wwwroot\\LessonVideos\\47e4bcaf-4b17-4df9-a43d-1aa4dc24058a_video_2024-05-14_03-28-12.mp4",
       "SourceId": "CodeAndPuzzleProject",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Sanjar\\Desktop\\CodeAndPuzzleProject\\wwwroot\\",
       "BasePath": "_content/CodeAndPuzzleProject",
-      "RelativePath": "Avatars/default.png",
+      "RelativePath": "LessonVideos/47e4bcaf-4b17-4df9-a43d-1aa4dc24058a_video_2024-05-14_03-28-12.mp4",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -33,7 +33,26 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Avatars\\default.png"
+      "OriginalItemSpec": "wwwroot\\LessonVideos\\47e4bcaf-4b17-4df9-a43d-1aa4dc24058a_video_2024-05-14_03-28-12.mp4"
+    },
+    {
+      "Identity": "C:\\Users\\Sanjar\\Desktop\\CodeAndPuzzleProject\\wwwroot\\LessonVideos\\bcc9cfef-8e6a-4349-a6a2-21033276b944_video_2024-05-14_03-28-12.mp4",
+      "SourceId": "CodeAndPuzzleProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Sanjar\\Desktop\\CodeAndPuzzleProject\\wwwroot\\",
+      "BasePath": "_content/CodeAndPuzzleProject",
+      "RelativePath": "LessonVideos/bcc9cfef-8e6a-4349-a6a2-21033276b944_video_2024-05-14_03-28-12.mp4",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\LessonVideos\\bcc9cfef-8e6a-4349-a6a2-21033276b944_video_2024-05-14_03-28-12.mp4"
     }
   ]
 }
