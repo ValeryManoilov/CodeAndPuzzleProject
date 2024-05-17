@@ -88,21 +88,17 @@ public class LessonController : ControllerBase
     [HttpGet("mark/{lessonId}/{mark}")]
     public async Task<IActionResult> Authorize(int lessonId, int mark)
     {
-        if (mark > 10)
+        if (mark > 10 || mark < 0)
         {
             return NotFound();
         }
         string authHeader = Request.Headers["Authorization"];
         string token = authHeader.Substring("Bearer ".Length).Trim();
         var principal = _tokenService.ValidateToken(token);
-<<<<<<< HEAD
-        
-=======
         if (principal == null)
         {
             return BadRequest("Не авторизован");
         }
->>>>>>> dev_Satlykov_Sanjar
         var email = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
         var user = _userManager.FindByEmailAsync(email);
         if (user != null)
