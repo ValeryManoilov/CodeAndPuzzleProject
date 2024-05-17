@@ -64,28 +64,29 @@ public class AdminController : ControllerBase
         return NotFound();
     }
        
-    [Authorize(Roles = "Admin")]
-    [HttpGet("all")]
-    public IActionResult All()
-    {
-        string authHeader = Request.Headers["Authorization"];
-        string token = authHeader.Substring("Bearer ".Length).Trim();
-        var principals = _tokenSevice.ValidateToken(token);
+    //ДЛЯ ТЕСТОВ
+    // [Authorize(Roles = "Admin")]
+    // [HttpGet("all")]
+    // public IActionResult All()
+    // {
+    //     string authHeader = Request.Headers["Authorization"];
+    //     string token = authHeader.Substring("Bearer ".Length).Trim();
+    //     var principals = _tokenSevice.ValidateToken(token);
 
-        if (principals != null)
-        {
-            var users = _userManager.Users.ToList();
-            var responseData = users.Select(u => new 
-            {
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                UserRoles = _userManager.GetRolesAsync(u).Result
-            });
+    //     if (principals != null)
+    //     {
+    //         var users = _userManager.Users.ToList();
+    //         var responseData = users.Select(u => new 
+    //         {
+    //             FirstName = u.FirstName,
+    //             LastName = u.LastName,
+    //             UserRoles = _userManager.GetRolesAsync(u).Result
+    //         });
 
-            return Ok(responseData);
-        }
-        return NotFound("Не авторизован");
-    }
+    //         return Ok(responseData);
+    //     }
+    //     return NotFound("Не авторизован");
+    // }
 
     [HttpGet("getuser")]
     public async Task<IActionResult> GetUser(string email)

@@ -62,7 +62,9 @@ public class UserController : ControllerBase
                 var confirmationLink = Url.Action("ConfirmEmail", "User", new { userId = user.Id, token}, Request.Scheme);
                 try
                 {
-                    await _emailService.SendEmailAsync(user.Email, "Подтверждение почты", confirmationLink, false);
+                    await _emailService
+                    .SendEmailAsync(user.Email, "Подтверждение почты. Скопируйте ссылку в браузер",
+                     confirmationLink, false);
                 }
                 catch (Exception ex)
                 {
@@ -110,6 +112,7 @@ public class UserController : ControllerBase
                 IList<string> userRoles = await _userManager.GetRolesAsync(user);
 
                 string subject = "Вход в аккаунт";
+                Console.WriteLine(dataForm.Email);
                 await _emailService.SendEmailAsync(dataForm.Email, subject,
                 _emailAnswerPatterns.emailAnswerPatterns[subject] , false);
 
@@ -137,7 +140,10 @@ public class UserController : ControllerBase
         string authHeader = Request.Headers["Authorization"];
         string token = authHeader.Substring("Bearer ".Length).Trim();
         var principal = _tokenService.ValidateToken(token);
-        
+        if (principal == null)
+        {
+            return BadRequest("Не авторизован");
+        }
         string userEmail = principal.Claims.First(c => c.Type == ClaimTypes.Email).Value;
         ApplicationUser user = await _userManager.FindByEmailAsync(userEmail);
         if (user != null)
