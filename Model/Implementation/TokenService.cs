@@ -32,7 +32,7 @@ public class TokenService : ITokenService
             issuer: _issuer,
             audience: _audience,
             claims: claims,
-            expires: DateTime.UtcNow.Add(TimeSpan.FromDays(2)),
+            expires: DateTime.UtcNow.Add(TimeSpan.FromSeconds(60)),
             signingCredentials: new SigningCredentials(_securityKey, SecurityAlgorithms.HmacSha256)
         );
         return new JwtSecurityTokenHandler().WriteToken(jwt);    

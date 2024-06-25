@@ -312,16 +312,19 @@ public class LessonRepository : ILessonRepository
     }
 
     public async Task AddFavourite(int userId, int lessonId)
-    {
+    {   
+        Console.WriteLine(userId);
         var favouriteLesson = _lessonContext.UserFavouriteLessons
         .FirstOrDefault(l => l.LessonId == lessonId && l.UserId == userId);
         if (favouriteLesson == null)
         {
             _lessonContext.UserFavouriteLessons.Add(new UserFavouriteLesson
             {
+                
                 UserId = userId,
                 LessonId = lessonId
             });
+            
         }
         await _lessonContext.SaveChangesAsync();
     }

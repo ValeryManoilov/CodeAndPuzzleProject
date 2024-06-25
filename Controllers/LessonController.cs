@@ -121,9 +121,10 @@ public class LessonController : ControllerBase
             return BadRequest("Не авторизован");
         }
         var email = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
-        var user = _userManager.FindByEmailAsync(email);
+        var user = await _userManager.FindByEmailAsync(email);
         if (user != null)
         {
+            Console.WriteLine(user.Id);
             await _lessonService.AddFavourite(user.Id, lessonId);
             return Ok();
         }
@@ -141,10 +142,10 @@ public class LessonController : ControllerBase
             return BadRequest("Не авторизован");
         }
         var email = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
-        var user = _userManager.FindByEmailAsync(email);
+        var user = await _userManager.FindByEmailAsync(email);
         if (user != null)
         {
-            await _lessonService.AddFavourite(user.Id, lessonId);
+            await _lessonService.DeleteFavourite(user.Id, lessonId);
             return Ok();
         }
         return BadRequest();
